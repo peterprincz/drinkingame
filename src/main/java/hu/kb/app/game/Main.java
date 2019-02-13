@@ -17,10 +17,10 @@ public class Main {
 
         Question question = rareGame.startGameCycle();
         System.out.println("The question is" + question);
-        rareGame.sendAnswerToGameCycle(new Answer(player1,"i dont know"));
-        rareGame.sendAnswerToGameCycle(new Answer(player2,"i dont know"));
-        rareGame.sendAnswerToGameCycle(new Answer(player3,"i dont know"));
-        rareGame.sendAnswerToGameCycle(new Answer(player4,"no idea"));
+        rareGame.sendAnswerToGameCycle(new Answer(1, player1,"i dont know"));
+        rareGame.sendAnswerToGameCycle(new Answer(1, player2,"i dont know"));
+        rareGame.sendAnswerToGameCycle(new Answer(1, player3,"i dont know"));
+        rareGame.sendAnswerToGameCycle(new Answer(1, player4,"no idea"));
 
         System.out.println(rareGame.getWinner());
     }

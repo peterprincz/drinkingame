@@ -12,7 +12,7 @@ public class RareGameCycle implements GameCycle {
     private List<Answer> answers = new ArrayList<>();
 
     public RareGameCycle(Question question,List<Player> cyclePlayers) {
-        players.addAll(cyclePlayers);
+        cyclePlayers.forEach(this::join);
         this.status = Status.CREATED;
         this.question = question;
     }
@@ -59,5 +59,29 @@ public class RareGameCycle implements GameCycle {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }

@@ -24,13 +24,13 @@ public class GameService {
         return rareGameMap.get(host);
     }
 
-
-    public Question startGame(Player host){
+    public RareGame startGame(Player host){
         RareGame rareGame = rareGameMap.get(host);
         if(rareGame == null){
             throw new RuntimeException("Host doesn't have a game");
         }
-         return rareGame.startGameCycle();
+        Question question = rareGame.startGameCycle();
+        return rareGame;
     }
 
     public RareGame lockGame(Player host){
@@ -42,14 +42,14 @@ public class GameService {
         return rareGame;
     }
 
-    public RareGame sendAnswerToGame(Answer answer, Integer gameId){
+    public RareGame sendAnswerToGame(Answer answer){
         for(RareGame rareGame : rareGameMap.values()){
-            if(rareGame.getId().equals(gameId)){
+            if(rareGame.getId().equals(answer.getGameId())){
                 rareGame.sendAnswerToGameCycle(answer);
                 return rareGame;
             }
         }
-        throw  new RuntimeException("Game not found with the id of:" + gameId);
+        throw  new RuntimeException("Game not found with the id of:" + answer.getGameId());
     }
 
     public String getWinner(Player player){

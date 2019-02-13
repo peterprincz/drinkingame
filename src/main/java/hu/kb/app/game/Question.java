@@ -26,4 +26,12 @@ public class Question {
                 ", options=" + options +
                 '}';
     }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public void setOptions(List<String> options) {
+        this.options = options;
+    }
 }

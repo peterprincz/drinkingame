@@ -1,5 +1,6 @@
 package hu.kb.app.controller;
 
+/*
 import hu.kb.app.modell.User;
 import hu.kb.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,3 +27,4 @@ public class UserController {
     }
 
 }
+*/

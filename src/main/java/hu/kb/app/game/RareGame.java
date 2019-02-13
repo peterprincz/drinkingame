@@ -54,4 +54,25 @@ public class RareGame {
     public Integer getId() {
         return id;
     }
+
+
+    public List<RareGameCycle> getGameCycles() {
+        return gameCycles;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setGameCycles(List<RareGameCycle> gameCycles) {
+        this.gameCycles = gameCycles;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
 }
