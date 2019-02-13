@@ -3,7 +3,6 @@ package hu.kb.app.game;
 import hu.kb.app.player.Player;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class RareGameCycle implements GameCycle {
     private List<Player> players = new ArrayList<>();
@@ -11,8 +10,7 @@ public class RareGameCycle implements GameCycle {
     private Question question;
     private List<Answer> answers = new ArrayList<>();
 
-    public RareGameCycle(Question question,List<Player> cyclePlayers) {
-        cyclePlayers.forEach(this::join);
+    public RareGameCycle(Question question) {
         this.status = Status.CREATED;
         this.question = question;
     }

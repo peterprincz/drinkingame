@@ -19,20 +19,18 @@ public class RareGame {
     private List<Player> players = new ArrayList<>();
 
     public RareGame() {
-        this.gameCycles.add(new RareGameCycle(new Question("What the fuck am i doing here?",Arrays.asList("i dont know","no idea","ask someone else")),this.players));
+        this.gameCycles.add(new RareGameCycle(new Question("What the fuck am i doing here?",Arrays.asList("i dont know","no idea","ask someone else"))));
     }
+
 
     public Question startGameCycle(){
         RareGameCycle gameCycle = gameCycles.get(0);
-        if(gameCycle.getStatus() == Status.PREPARED){
-            return gameCycle.start();
-        }
-        throw new IllegalStateException("Game has already been started/not prepared :(");
+        this.players.forEach(gameCycle::join);
+        gameCycle.setStatus(Status.PREPARED);
+        Question question = gameCycle.start();
+        return question;
     }
 
-    public void lockGame(){
-        this.gameCycles.get(0).setStatus(Status.PREPARED);
-    }
 
     public void sendAnswerToGameCycle(Answer answer){
         if(gameCycles.get(0).getStatus() == Status.ONGOING){

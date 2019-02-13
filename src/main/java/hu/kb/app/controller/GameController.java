@@ -33,7 +33,9 @@ public class GameController {
         return ResponseEntity.ok(gameService.startGame(host));
     }
 
-    @RequestMapping(method = RequestMethod.POST,
+    @RequestMapping(
+            path = "send-answer",
+            method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RareGame> sendAnswerToGame(@RequestBody Answer answer){

@@ -33,15 +33,6 @@ public class GameService {
         return rareGame;
     }
 
-    public RareGame lockGame(Player host){
-        RareGame rareGame = rareGameMap.get(host);
-        if( rareGame == null){
-            throw new RuntimeException("Host doesn't have a game");
-        }
-        rareGame.lockGame();
-        return rareGame;
-    }
-
     public RareGame sendAnswerToGame(Answer answer){
         for(RareGame rareGame : rareGameMap.values()){
             if(rareGame.getId().equals(answer.getGameId())){
