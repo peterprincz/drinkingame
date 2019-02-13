@@ -40,7 +40,7 @@ public class RareGame {
         }
     }
 
-    public String getWinner(){
+    public String evaluteCycle(){
         return gameCycles.get(0).evaluateResults();
     }
 

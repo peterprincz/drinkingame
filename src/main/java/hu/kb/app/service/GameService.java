@@ -24,6 +24,12 @@ public class GameService {
         return rareGameMap.get(host);
     }
 
+    public RareGame joinGame(Player player){
+        RareGame rareGame = (RareGame) rareGameMap.values().toArray()[0];
+        rareGame.addPlayer(player);
+        return rareGame;
+    }
+
     public RareGame startGame(Player host){
         RareGame rareGame = rareGameMap.get(host);
         if(rareGame == null){
@@ -34,17 +40,13 @@ public class GameService {
     }
 
     public RareGame sendAnswerToGame(Answer answer){
-        for(RareGame rareGame : rareGameMap.values()){
-            if(rareGame.getId().equals(answer.getGameId())){
-                rareGame.sendAnswerToGameCycle(answer);
-                return rareGame;
-            }
-        }
-        throw  new RuntimeException("Game not found with the id of:" + answer.getGameId());
+        RareGame rareGame = rareGameMap.values().stream().filter(x -> x.getId().equals(answer.getGameId())).findFirst().orElseThrow(() -> new RuntimeException("Game not found with the id of:" + answer.getGameId()));
+        rareGame.sendAnswerToGameCycle(answer);
+        return rareGame;
     }
 
-    public String getWinner(Player player){
-        return rareGameMap.get(player).getWinner();
+    public String evaluateGameCycle(Player host){
+        return rareGameMap.get(host).evaluteCycle();
     }
 
 

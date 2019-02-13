@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/game")
+@RestController
 public class GameController {
 
     @Autowired
     GameService gameService;
 
-    @RequestMapping(method = RequestMethod.POST,
+
+    @RequestMapping(
+            path = "create-game",
+            method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RareGame> createGame(@RequestBody Player host){
@@ -26,7 +29,18 @@ public class GameController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST,
+    @RequestMapping(
+            path = "join-game",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<RareGame> joinGame(@RequestBody Player player){
+        return ResponseEntity.ok(gameService.joinGame(player));
+    }
+
+    @RequestMapping(
+            path = "start-game",
+            method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RareGame> startGame(@RequestBody Player host){
@@ -42,12 +56,19 @@ public class GameController {
         return ResponseEntity.ok(gameService.sendAnswerToGame(answer));
     }
 
-    @RequestMapping(method = RequestMethod.POST,
+
+    @RequestMapping(
+            path = "end-game",
+            method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RareGame> endGame(@RequestBody Player host){
-        return ResponseEntity.ok(gameService.createGame(host));
+    public ResponseEntity<String> endGame(@RequestBody Player host){
+        return ResponseEntity.ok(gameService.evaluateGameCycle(host));
     }
+
+
+
+    //evaluateGameCycle
 
 
 }
