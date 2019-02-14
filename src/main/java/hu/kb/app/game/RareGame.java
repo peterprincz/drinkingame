@@ -1,18 +1,26 @@
 package hu.kb.app.game;
 
+import hu.kb.app.game.gamecycle.RareGameCycle;
+import hu.kb.app.game.quiz.Answer;
+import hu.kb.app.game.quiz.Question;
+import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Entity
 public class RareGame {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Transient
     private List<RareGameCycle> gameCycles = new ArrayList<>();
+    @ElementCollection(targetClass = Player.class)
     private List<Player> players = new ArrayList<>();
 
     public RareGame() {

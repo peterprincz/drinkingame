@@ -1,7 +1,11 @@
-package hu.kb.app.game;
+package hu.kb.app.game.gamecycle;
 
+import hu.kb.app.game.quiz.Answer;
+import hu.kb.app.game.quiz.Question;
+import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
 
+import javax.persistence.Entity;
 import java.util.*;
 
 public class RareGameCycle implements GameCycle {

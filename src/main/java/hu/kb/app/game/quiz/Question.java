@@ -1,4 +1,4 @@
-package hu.kb.app.game;
+package hu.kb.app.game.quiz;
 
 import java.util.List;
 
