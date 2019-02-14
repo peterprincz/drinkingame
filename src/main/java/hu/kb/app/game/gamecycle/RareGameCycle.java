@@ -5,31 +5,25 @@ import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
 
-import javax.persistence.*;
 import java.util.*;
 
-@Entity
 public class RareGameCycle implements GameCycle {
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     Integer id;
 
-    @ElementCollection
     private List<Player> players = new ArrayList<>();
-    @Enumerated
     private Status status;
 
-    private String question;
+    private Question question;
 
-    @ElementCollection
     private List<Answer> answers = new ArrayList<>();
 
     public RareGameCycle() {
     }
 
-    public RareGameCycle(String question) {
+    public RareGameCycle(Question question) {
         this.status = Status.CREATED;
         this.question = question;
     }
@@ -40,7 +34,7 @@ public class RareGameCycle implements GameCycle {
     }
 
     @Override
-    public String start() {
+    public Question start() {
         this.status = Status.ONGOING;
         return this.question;
     }
@@ -86,11 +80,11 @@ public class RareGameCycle implements GameCycle {
         this.players = players;
     }
 
-    public String getQuestion() {
+    public Question getQuestion() {
         return question;
     }
 
-    public void setQuestion(String question) {
+    public void setQuestion(Question question) {
         this.question = question;
     }
 

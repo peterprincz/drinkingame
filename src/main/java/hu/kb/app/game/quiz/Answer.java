@@ -2,13 +2,9 @@ package hu.kb.app.game.quiz;
 
 import hu.kb.app.player.Player;
 
-import javax.persistence.*;
 
-@Entity
 public class Answer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer gameId;
     private Integer playerId;
     private String answer;
@@ -40,5 +36,9 @@ public class Answer {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public void setPlayerId(Integer playerId) {
+        this.playerId = playerId;
     }
 }
