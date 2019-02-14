@@ -2,7 +2,6 @@ package hu.kb.app.game.quiz;
 
 import hu.kb.app.player.Player;
 
-import javax.persistence.*;
 
 public class Answer {
 

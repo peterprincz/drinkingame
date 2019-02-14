@@ -1,6 +1,7 @@
 package hu.kb.app.controller;
 
 import hu.kb.app.apiobjects.JoinGameRequest;
+import hu.kb.app.game.gamecycle.RareGameCycle;
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.RareGame;
 import hu.kb.app.player.Player;
@@ -66,7 +67,7 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RareGame> startGame(@RequestBody Integer id){
+        public ResponseEntity<RareGame> startGame(@RequestBody Integer id){
         return ResponseEntity.ok(gameService.startGameCycle(id));
     }
 

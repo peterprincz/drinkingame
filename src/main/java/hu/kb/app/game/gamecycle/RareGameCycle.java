@@ -5,7 +5,6 @@ import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
 
-import javax.persistence.Entity;
 import java.util.*;
 
 public class RareGameCycle implements GameCycle {
