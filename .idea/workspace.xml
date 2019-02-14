@@ -2,37 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0c801d6b-20c1-4202-94c0-5074ba6fe8ba" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hu/kb/app/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hu/kb/app/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hu/kb/app/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hu/kb/app/game/RareGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hu/kb/app/game/RareGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hu/kb/app/game/gamecycle/GameCycle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hu/kb/app/game/gamecycle/GameCycle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hu/kb/app/game/gamecycle/RareGameCycle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hu/kb/app/game/gamecycle/RareGameCycle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hu/kb/app/game/quiz/Answer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hu/kb/app/game/quiz/Answer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hu/kb/app/game/quiz/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hu/kb/app/game/quiz/Question.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hu/kb/app/repository/RareGameRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hu/kb/app/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hu/kb/app/service/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hu/kb/app/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/DrinkingGame.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/apiobjects/JoinGameRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/controller/GameController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/game/RareGame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/game/gamecycle/GameCycle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/game/gamecycle/RareGameCycle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/game/quiz/Answer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/game/quiz/Question.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/game/status/Status.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/player/Player.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/player/drinksetting/DrinkType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/repository/PlayerRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/repository/RareGameRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/service/GameService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/service/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/transaction-logs/part1.btm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/transaction-logs/part2.btm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hu/kb/app/controller/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hu/kb/app/controller/GameController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +15,7 @@
     <session id="2006248301">
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="class" value="1" />
           <entry key="java" value="22" />
           <entry key="properties" value="2" />
           <entry key="xml" value="1" />
@@ -50,6 +23,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="CLASS" value="1" />
           <entry key="JAVA" value="22" />
           <entry key="Properties" value="2" />
           <entry key="XML" value="1" />
@@ -57,38 +31,37 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="258" />
+          <entry key="java" value="285" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="258" />
+          <entry key="JAVA" value="285" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/hu/kb/app/communication/WebSocketConfig.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/hu/kb/app/controller/GameController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+            <state relative-caret-position="374">
+              <caret line="48" column="63" selection-start-line="48" selection-start-column="63" selection-end-line="48" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1109#1110#0" expanded="true" />
+                <element signature="e#1173#1174#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/hu/kb/app/controller/GameController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-messaging/5.0.4.RELEASE/spring-messaging-5.0.4.RELEASE.jar!/org/springframework/messaging/simp/SimpMessagingTemplate.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="24" selection-end-column="28" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="299">
+              <caret line="118" column="16" selection-start-line="118" selection-start-column="16" selection-end-line="118" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -96,20 +69,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/hu/kb/app/service/GameService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="42" column="61" selection-start-line="42" selection-start-column="44" selection-end-line="42" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/hu/kb/app/communication/WebSocketController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="17" selection-start-line="14" selection-end-line="15" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="714">
+              <caret line="42" column="61" selection-start-line="42" selection-start-column="61" selection-end-line="42" selection-end-column="61" />
             </state>
           </provider>
         </entry>
@@ -219,15 +180,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="communication" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DrinkingGame" type="b2602c69:ProjectViewProjectNode" />
-              <item name="drinkingame-master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -309,7 +261,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12899786" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12899786" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -320,7 +272,7 @@
       <window_info id="Web" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.0" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.69391304" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -386,9 +338,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/hu/kb/app/controller/UserController.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/hu/kb/app/controller/UserController.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/hu/kb/app/game/gamecycle/GameCycle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -471,9 +421,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="17" selection-start-line="14" selection-end-line="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -486,17 +433,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hu/kb/app/service/GameService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="42" column="61" selection-start-line="42" selection-start-column="44" selection-end-line="42" selection-end-column="61" />
+        <state relative-caret-position="714">
+          <caret line="42" column="61" selection-start-line="42" selection-start-column="61" selection-end-line="42" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-messaging/5.0.4.RELEASE/spring-messaging-5.0.4.RELEASE.jar!/org/springframework/messaging/simp/SimpMessagingTemplate.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="118" column="16" selection-start-line="118" selection-start-column="16" selection-end-line="118" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hu/kb/app/controller/GameController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="24" selection-end-column="28" />
+        <state relative-caret-position="374">
+          <caret line="48" column="63" selection-start-line="48" selection-start-column="63" selection-end-line="48" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1109#1110#0" expanded="true" />
+            <element signature="e#1173#1174#0" expanded="true" />
           </folding>
         </state>
       </provider>

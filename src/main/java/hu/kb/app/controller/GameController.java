@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,9 @@ import java.util.List;
 
 @RestController
 public class GameController {
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
     GameService gameService;
@@ -41,8 +45,8 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @SendTo("/topic/greetings")
     public ResponseEntity<RareGame> createGame(){
+        simpMessagingTemplate.convertAndSend("/topic/greetings", "ANYAD");
         return ResponseEntity.ok(gameService.createGame());
     }
 
