@@ -18,18 +18,15 @@ public class RareGame {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Transient
-    private List<RareGameCycle> gameCycles = new ArrayList<>();
     @ElementCollection(targetClass = Player.class)
     private List<Player> players = new ArrayList<>();
 
     public RareGame() {
         this.id = 0;
-        this.gameCycles.add(new RareGameCycle(new Question("What the fuck am i doing here?",Arrays.asList("i dont know","no idea","ask someone else"))));
     }
 
 
-    public Question startGameCycle(){
+    public Question startGameCycle(List<RareGameCycle> gameCycles){
         RareGameCycle gameCycle = gameCycles.get(0);
         this.players.forEach(gameCycle::join);
         gameCycle.setStatus(Status.PREPARED);
@@ -38,7 +35,7 @@ public class RareGame {
     }
 
 
-    public void sendAnswerToGameCycle(Answer answer){
+    public void sendAnswerToGameCycle(Answer answer,List<RareGameCycle> gameCycles){
         if(gameCycles.get(0).getStatus() == Status.ONGOING){
             gameCycles.get(0).handleAnswer(answer);
         } else{
@@ -46,7 +43,7 @@ public class RareGame {
         }
     }
 
-    public String evaluteCycle(){
+    public String evaluteCycle(List<RareGameCycle> gameCycles){
         return gameCycles.get(0).evaluateResults();
     }
 
@@ -60,20 +57,12 @@ public class RareGame {
     }
 
 
-    public List<RareGameCycle> getGameCycles() {
-        return gameCycles;
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public void setGameCycles(List<RareGameCycle> gameCycles) {
-        this.gameCycles = gameCycles;
     }
 
     public void setPlayers(List<Player> players) {

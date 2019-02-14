@@ -13,11 +13,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class GameController {
 
     @Autowired
     GameService gameService;
+
+
+    @RequestMapping(
+            path = "get-games",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<List<RareGame>> getGames(){
+        return ResponseEntity.ok(gameService.getGames());
+    }
+
 
 
     @RequestMapping(
@@ -54,7 +67,7 @@ public class GameController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RareGame> startGame(@RequestBody Integer id){
-        return ResponseEntity.ok(gameService.startGame(id));
+        return ResponseEntity.ok(gameService.startGameCycle(id));
     }
 
     @RequestMapping(

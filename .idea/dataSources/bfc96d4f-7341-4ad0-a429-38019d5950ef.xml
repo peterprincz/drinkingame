@@ -56,7 +56,7 @@
       <Comment>adam</Comment>
       <StateNumber>124008</StateNumber>
       <Owner>adam</Owner>
-      <IntrospectionStateNumber>124223</IntrospectionStateNumber>
+      <IntrospectionStateNumber>124286</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </database>
@@ -142,7 +142,7 @@
       <Comment>standard public schema</Comment>
       <StateNumber>351</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>124224</IntrospectionStateNumber>
+      <IntrospectionStateNumber>124287</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -203,27 +203,27 @@
       <SchemaId>11</SchemaId>
     </extension>
     <sequence id="33" parent="25" name="hibernate_sequence">
-      <ObjectId>17722</ObjectId>
+      <ObjectId>17818</ObjectId>
       <Owner>adam</Owner>
-      <StateNumber>124204</StateNumber>
+      <StateNumber>124276</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <CacheSize>1</CacheSize>
       <DataType>bigint</DataType>
     </sequence>
     <table id="34" parent="25" name="answer">
-      <ObjectId>17724</ObjectId>
+      <ObjectId>17820</ObjectId>
       <Owner>adam</Owner>
-      <StateNumber>124205</StateNumber>
+      <StateNumber>124277</StateNumber>
     </table>
     <table id="35" parent="25" name="player">
-      <ObjectId>17729</ObjectId>
+      <ObjectId>17825</ObjectId>
       <Owner>adam</Owner>
-      <StateNumber>124210</StateNumber>
+      <StateNumber>124282</StateNumber>
     </table>
     <table id="36" parent="25" name="rare_game">
-      <ObjectId>17734</ObjectId>
+      <ObjectId>17830</ObjectId>
       <Owner>adam</Owner>
-      <StateNumber>124211</StateNumber>
+      <StateNumber>124283</StateNumber>
     </table>
     <table id="37" parent="25" name="rare_game_cycle">
       <ObjectId>17662</ObjectId>
@@ -246,9 +246,9 @@
       <StateNumber>124184</StateNumber>
     </table>
     <table id="41" parent="25" name="rare_game_players">
-      <ObjectId>17739</ObjectId>
+      <ObjectId>17835</ObjectId>
       <Owner>adam</Owner>
-      <StateNumber>124211</StateNumber>
+      <StateNumber>124283</StateNumber>
     </table>
     <table id="42" parent="25" name="users">
       <ObjectId>17384</ObjectId>
@@ -259,30 +259,30 @@
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>124205</StateNumber>
+      <StateNumber>124277</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <column id="44" parent="34" name="answer">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
-      <StateNumber>124205</StateNumber>
+      <StateNumber>124277</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="45" parent="34" name="game_id">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
-      <StateNumber>124205</StateNumber>
+      <StateNumber>124277</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <index id="46" parent="34" name="answer_pkey">
-      <ObjectId>17727</ObjectId>
-      <StateNumber>124205</StateNumber>
+      <ObjectId>17823</ObjectId>
+      <StateNumber>124277</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="47" parent="34" name="answer_pkey">
-      <ObjectId>17728</ObjectId>
-      <StateNumber>124205</StateNumber>
+      <ObjectId>17824</ObjectId>
+      <StateNumber>124277</StateNumber>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>answer_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
@@ -291,44 +291,44 @@
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>124206</StateNumber>
+      <StateNumber>124278</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <column id="49" parent="35" name="drink_count">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>124206</StateNumber>
+      <StateNumber>124278</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <column id="50" parent="35" name="drink_type">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
-      <StateNumber>124206</StateNumber>
+      <StateNumber>124278</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <column id="51" parent="35" name="name">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
-      <StateNumber>124206</StateNumber>
+      <StateNumber>124278</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="52" parent="35" name="weight">
       <Position>5</Position>
       <DataType>double precision|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>124206</StateNumber>
+      <StateNumber>124278</StateNumber>
       <TypeId>701</TypeId>
     </column>
     <index id="53" parent="35" name="player_pkey">
-      <ObjectId>17732</ObjectId>
-      <StateNumber>124206</StateNumber>
+      <ObjectId>17828</ObjectId>
+      <StateNumber>124278</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="54" parent="35" name="player_pkey">
-      <ObjectId>17733</ObjectId>
-      <StateNumber>124206</StateNumber>
+      <ObjectId>17829</ObjectId>
+      <StateNumber>124278</StateNumber>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>player_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
@@ -337,18 +337,18 @@
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>124207</StateNumber>
+      <StateNumber>124279</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <index id="56" parent="36" name="rare_game_pkey">
-      <ObjectId>17737</ObjectId>
-      <StateNumber>124207</StateNumber>
+      <ObjectId>17833</ObjectId>
+      <StateNumber>124279</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="57" parent="36" name="rare_game_pkey">
-      <ObjectId>17738</ObjectId>
-      <StateNumber>124207</StateNumber>
+      <ObjectId>17834</ObjectId>
+      <StateNumber>124279</StateNumber>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>rare_game_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
@@ -485,43 +485,43 @@
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>124208</StateNumber>
+      <StateNumber>124280</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <column id="77" parent="41" name="players_id">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>124208</StateNumber>
+      <StateNumber>124280</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <index id="78" parent="41" name="uk_5sf8ydenkye2lu6rofrvb7cgy">
-      <ObjectId>17742</ObjectId>
-      <StateNumber>124209</StateNumber>
+      <ObjectId>17838</ObjectId>
+      <StateNumber>124281</StateNumber>
       <ColNames>players_id</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="79" parent="41" name="uk_5sf8ydenkye2lu6rofrvb7cgy">
-      <ObjectId>17743</ObjectId>
-      <StateNumber>124209</StateNumber>
+      <ObjectId>17839</ObjectId>
+      <StateNumber>124281</StateNumber>
       <ColNames>players_id</ColNames>
       <UnderlyingIndexName>uk_5sf8ydenkye2lu6rofrvb7cgy</UnderlyingIndexName>
     </key>
     <foreign-key id="80" parent="41" name="fkqmamnh3h80uoer1w39b5y9j71">
-      <ObjectId>17749</ObjectId>
-      <StateNumber>124211</StateNumber>
+      <ObjectId>17845</ObjectId>
+      <StateNumber>124283</StateNumber>
       <ColNames>rare_game_id</ColNames>
-      <RefTableId>17734</RefTableId>
+      <RefTableId>17830</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>rare_game</RefTableName>
       <RefKeyName>rare_game_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
     <foreign-key id="81" parent="41" name="fkaedxq247dwigl248m3tubkeus">
-      <ObjectId>17744</ObjectId>
-      <StateNumber>124210</StateNumber>
+      <ObjectId>17840</ObjectId>
+      <StateNumber>124282</StateNumber>
       <ColNames>players_id</ColNames>
-      <RefTableId>17729</RefTableId>
+      <RefTableId>17825</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>player</RefTableName>
       <RefKeyName>player_pkey</RefKeyName>

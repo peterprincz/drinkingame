@@ -4,14 +4,9 @@ import hu.kb.app.player.Player;
 
 import javax.persistence.*;
 
-@Entity
 public class Answer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
 
     private Integer gameId;
-    @Transient
     private Player player;
     private String answer;
 
@@ -45,13 +40,5 @@ public class Answer {
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }
