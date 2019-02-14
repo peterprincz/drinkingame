@@ -4,22 +4,26 @@ import hu.kb.app.player.Player;
 
 import javax.persistence.*;
 
+@Entity
 public class Answer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer gameId;
-    private Player player;
+    private Integer playerId;
     private String answer;
 
     public Answer(){}
 
-    public Answer(Integer gameId, Player player, String answer) {
+    public Answer(Integer gameId, Integer playerId, String answer) {
         this.gameId = gameId;
-        this.player = player;
+        this.playerId = playerId;
         this.answer = answer;
     }
 
-    public Player getPlayer() {
-        return player;
+
+    public Integer getPlayerId() {
+        return playerId;
     }
 
     public String getAnswer() {
@@ -32,10 +36,6 @@ public class Answer {
 
     public void setGameId(Integer gameId) {
         this.gameId = gameId;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public void setAnswer(String answer) {

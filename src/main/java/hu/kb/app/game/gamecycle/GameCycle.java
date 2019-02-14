@@ -6,7 +6,7 @@ import hu.kb.app.player.Player;
 
 public interface GameCycle {
     void join(Player player);
-    Question start();
+    String start();
     void handleAnswer(Answer answer);
     String evaluateResults();
 }

@@ -8,7 +8,6 @@ import hu.kb.app.player.Player;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -19,23 +18,24 @@ public class RareGame {
     private Integer id;
 
     @ElementCollection(targetClass = Player.class)
-    private List<Player> players = new ArrayList<>();
+    private List<Player> players  = new ArrayList<>();
+
+    @ElementCollection(targetClass = RareGameCycle.class)
+    private List<RareGameCycle> gameCycles = new ArrayList<>();
 
     public RareGame() {
-        this.id = 0;
     }
 
 
-    public Question startGameCycle(List<RareGameCycle> gameCycles){
+    public String startGameCycle(){
         RareGameCycle gameCycle = gameCycles.get(0);
         this.players.forEach(gameCycle::join);
         gameCycle.setStatus(Status.PREPARED);
-        Question question = gameCycle.start();
-        return question;
+        return gameCycle.start();
     }
 
 
-    public void sendAnswerToGameCycle(Answer answer,List<RareGameCycle> gameCycles){
+    public void sendAnswerToGameCycle(Answer answer){
         if(gameCycles.get(0).getStatus() == Status.ONGOING){
             gameCycles.get(0).handleAnswer(answer);
         } else{
@@ -43,8 +43,10 @@ public class RareGame {
         }
     }
 
-    public String evaluteCycle(List<RareGameCycle> gameCycles){
-        return gameCycles.get(0).evaluateResults();
+    public String evaluteCycle(){
+        String result = gameCycles.get(0).evaluateResults();
+        gameCycles.remove(0);
+        return result;
     }
 
     public void addPlayer(Player player){
