@@ -10,15 +10,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RareGame {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private List<RareGameCycle> gameCycles = new ArrayList<>();
     private List<Player> players = new ArrayList<>();
 
     public RareGame() {
+        this.id = 0;
         this.gameCycles.add(new RareGameCycle(new Question("What the fuck am i doing here?",Arrays.asList("i dont know","no idea","ask someone else"))));
     }
 

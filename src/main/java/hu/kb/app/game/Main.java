@@ -13,7 +13,6 @@ public class Main {
         rareGame.addPlayer(player2);
         rareGame.addPlayer(player3);
         rareGame.addPlayer(player4);
-        rareGame.lockGame();
 
         Question question = rareGame.startGameCycle();
         System.out.println("The question is" + question);
@@ -22,6 +21,5 @@ public class Main {
         rareGame.sendAnswerToGameCycle(new Answer(1, player3,"i dont know"));
         rareGame.sendAnswerToGameCycle(new Answer(1, player4,"no idea"));
 
-        System.out.println(rareGame.getWinner());
     }
 }

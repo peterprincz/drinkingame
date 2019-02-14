@@ -7,6 +7,8 @@ public class Answer {
     private Player player;
     private String answer;
 
+    public Answer(){}
+
     public Answer(Integer gameId, Player player, String answer) {
         this.gameId = gameId;
         this.player = player;
