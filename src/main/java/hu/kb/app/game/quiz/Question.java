@@ -4,6 +4,7 @@ import hu.kb.app.game.gamecycle.RareGameCycle;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Question {
@@ -38,5 +39,18 @@ public class Question {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return theQuestion.equals(question.theQuestion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(theQuestion);
     }
 }
