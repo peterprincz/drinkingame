@@ -55,7 +55,7 @@ public class RareGameCycle extends GameCycle {
                 listOfPlayerWithMaximumGuesses.add(entry.getKey());
             }
         }
-        //Selecting who managed to guess a people with the maximum amount of guess
+        result.setResult(listOfPlayerWithMaximumGuesses.toString());
         for (Map.Entry<Player, Answer> entry: answers.entrySet()){
             if(listOfPlayerWithMaximumGuesses.contains(entry.getValue().getAnswer())){
                 result.getWinners().add(entry.getKey());

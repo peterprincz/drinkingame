@@ -30,8 +30,8 @@ public class GameService {
         rareGame.setName(gameName);
         rareGame.generateAndSetId();
         rareGame.fillWithQuestions(Arrays.asList(
-                new Question("What the fuck am i doing here?"),
-                new Question("What the fuck am i doing here?")
+                new Question("What the fuck am i doing here?",Arrays.asList("hoppá","hopp")),
+                new Question("What the fuck am i doing here?",Arrays.asList("dik","komoly"))
         ));
         rareGameList.add(rareGame);
         return rareGame;

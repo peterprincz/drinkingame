@@ -1,7 +1,10 @@
 package hu.kb.app.game.quiz;
 
+import hu.kb.app.game.gamecycle.RareGameCycle;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Question {
@@ -17,7 +20,7 @@ public class Question {
     public Question() {
     }
 
-    public Question(String theQuestion) {
+    public Question(String theQuestion, List<String> options) {
         this.theQuestion = theQuestion;
     }
 
@@ -36,5 +39,18 @@ public class Question {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return theQuestion.equals(question.theQuestion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(theQuestion);
     }
 }
