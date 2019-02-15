@@ -1,26 +1,20 @@
 package hu.kb.app.game.quiz;
 
-import hu.kb.app.player.Player;
 
 
 public class Answer {
 
     private Integer gameId;
-    private Integer playerId;
     private String answer;
 
     public Answer(){}
 
-    public Answer(Integer gameId, Integer playerId, String answer) {
+    public Answer(Integer gameId, String answer) {
         this.gameId = gameId;
-        this.playerId = playerId;
         this.answer = answer;
     }
 
 
-    public Integer getPlayerId() {
-        return playerId;
-    }
 
     public String getAnswer() {
         return answer;
@@ -38,7 +32,4 @@ public class Answer {
         this.answer = answer;
     }
 
-    public void setPlayerId(Integer playerId) {
-        this.playerId = playerId;
-    }
 }

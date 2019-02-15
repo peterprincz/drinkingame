@@ -1,9 +1,7 @@
 package hu.kb.app.game.quiz;
 
-import hu.kb.app.game.gamecycle.RareGameCycle;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Question {
@@ -19,7 +17,7 @@ public class Question {
     public Question() {
     }
 
-    public Question(String theQuestion, List<String> options) {
+    public Question(String theQuestion) {
         this.theQuestion = theQuestion;
     }
 

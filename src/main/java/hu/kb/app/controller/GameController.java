@@ -1,16 +1,13 @@
 package hu.kb.app.controller;
 
-import hu.kb.app.apiobjects.JoinGameRequest;
-import hu.kb.app.game.gamecycle.RareGameCycle;
-import hu.kb.app.game.quiz.Answer;
+import hu.kb.app.api.*;
 import hu.kb.app.game.RareGame;
+import hu.kb.app.game.quiz.Result;
 import hu.kb.app.player.Player;
 import hu.kb.app.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class GameController {
+class GameController {
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
+    private
     GameService gameService;
 
 
@@ -45,13 +43,13 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RareGame> createGame(){
+    public ResponseEntity<RareGame> createGame(@RequestBody CreateGameRequest createGameRequest){
         simpMessagingTemplate.convertAndSend("/topic/greetings", "ANYAD");
-        return ResponseEntity.ok(gameService.createGame());
+        return ResponseEntity.ok(gameService.createGame(createGameRequest.getGameName()));
     }
 
     @RequestMapping(
-            path = "create-user",
+            path = "create-player",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -74,8 +72,8 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-        public ResponseEntity<RareGame> startGame(@RequestBody Integer id){
-        return ResponseEntity.ok(gameService.startGameCycle(id));
+        public ResponseEntity<RareGame> startGame(@RequestBody StartGameRequest startGameRequest){
+            return ResponseEntity.ok(gameService.startGameCycle(startGameRequest.getGameId()));
     }
 
     @RequestMapping(
@@ -83,8 +81,8 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RareGame> sendAnswerToGame(@RequestBody Answer answer){
-        return ResponseEntity.ok(gameService.sendAnswerToGame(answer));
+    public ResponseEntity<RareGame> sendAnswerToGame(@RequestBody SendAnswerRequest sendAnswerRequest){
+        return ResponseEntity.ok(gameService.sendAnswerToGame(sendAnswerRequest.getPlayerId(), sendAnswerRequest.getAnswer()));
     }
 
 
@@ -93,13 +91,8 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<String> endGame(@RequestBody Integer id){
-        return ResponseEntity.ok(gameService.evaluateGameCycle(id));
+    public ResponseEntity<Result> endGame(@RequestBody EndGameRequest endGameRequest){
+        return ResponseEntity.ok(gameService.evaluateGameCycle(endGameRequest.getGameId()));
     }
-
-
-
-    //evaluateGameCycle
-
 
 }
