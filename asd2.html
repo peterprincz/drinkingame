@@ -43,13 +43,17 @@ function testSocket() {
 function joinGame(){
     let request = {
         "playerId": 1,
-        "id": 1
+        "gameId": 1
     }
+
     $.ajax({
-        type: "post",
+        type: "POST",
         url: serverUrl + "join-game",
-        data: request,
-        dataType: "json",
+        data: JSON.stringify(request),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         success: function (response) {
             console.log("joined Game")
             console.log(response);

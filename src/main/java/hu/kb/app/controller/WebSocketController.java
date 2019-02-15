@@ -1,4 +1,4 @@
-package hu.kb.app.communication;
+package hu.kb.app.controller;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;

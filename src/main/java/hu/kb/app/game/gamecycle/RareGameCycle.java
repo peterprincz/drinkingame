@@ -8,16 +8,9 @@ import hu.kb.app.player.Player;
 
 import java.util.*;
 
-public class RareGameCycle implements GameCycle {
+public class RareGameCycle extends GameCycle {
 
-    private Integer id;
 
-    private List<Player> players = new ArrayList<>();
-    private Status status;
-
-    private Question question;
-
-    private Map<Player, Answer> answers = new HashMap<>();
 
     public RareGameCycle() {
     }
@@ -61,7 +54,7 @@ public class RareGameCycle implements GameCycle {
             if(entry.getValue().equals(maximumguess)){
                 listOfPlayerWithMaximumGuesses.add(entry.getKey());
             }
-        }//Selecting who managed to guess a people with the maximum amount of guess
+        }
         result.setResult(listOfPlayerWithMaximumGuesses.toString());
         for (Map.Entry<Player, Answer> entry: answers.entrySet()){
             if(listOfPlayerWithMaximumGuesses.contains(entry.getValue().getAnswer())){
