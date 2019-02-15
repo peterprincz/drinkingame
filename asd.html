@@ -12,22 +12,67 @@ asd
 </h3>
 </html>
 <script>
+var serverUrl = "http://localhost:8080/";
 var stompClient = null;
 
 
-function connect() {
-    var socket = new SockJS('http://localhost:8080/gs-guide-websocket');
+function connectToSocket() {
+    var socket = new SockJS(serverUrl + 'game-socket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
+        stompClient.subscribe('/game/join', function (greeting) {
+            console.log("Connected to the game socket")
+            console.log(greeting)
+        });
+        stompClient.subscribe('/game/start', function (greeting) {
+            console.log("THE GAME HAS STARTED")
+            console.log(greeting)
+        });
+        stompClient.subscribe('/game/end', function (greeting) {
+            console.log("THE GAME HAS ENDED")
             console.log(greeting)
         });
     });
 }
 
-function sendName() {
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+function testSocket() {
+    stompClient.send("/app/hello", {}, JSON.stringify({'connected':"true"}));
+}
+
+function joinGame(){
+    let request = {
+        "playerId": 1,
+        "id": 1
+    }
+    $.ajax({
+        type: "post",
+        url: serverUrl + "join-game",
+        data: request,
+        dataType: "json",
+        success: function (response) {
+            console.log("joined Game")
+            console.log(response);
+        }
+    });
+}
+
+function sendAnswer(){
+    let request = {
+        "gameId":1,
+        "playerId":1,
+        "answer": "answer1"
+    }
+    $.ajax({
+        type: "POST",
+        url: serverUrl + "join-game",
+        data: request,
+        dataType: "json",
+        success: function (response) {
+            console.log("sent an answer");
+            console.log(response)
+        }
+    });
 }
 
 

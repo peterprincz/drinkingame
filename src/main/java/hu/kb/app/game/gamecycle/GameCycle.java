@@ -6,11 +6,63 @@ import hu.kb.app.game.quiz.Result;
 import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
 
-public interface GameCycle {
-    void join(Player player);
-    Question start();
-    void handleAnswer(Player player, Answer answer);
-    Result evaluateResults();
-    void setStatus(Status status);
-    Status getStatus();
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public abstract class GameCycle {
+
+    protected Integer id;
+    protected List<Player> players = new ArrayList<>();
+    protected Status status;
+    protected Question question;
+    protected Map<Player, Answer> answers = new HashMap<>();
+
+
+    public abstract void join(Player player);
+    public abstract Question start();
+    public abstract void handleAnswer(Player player, Answer answer);
+    public abstract Result evaluateResults();
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public Map<Player, Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Map<Player, Answer> answers) {
+        this.answers = answers;
+    }
 }
