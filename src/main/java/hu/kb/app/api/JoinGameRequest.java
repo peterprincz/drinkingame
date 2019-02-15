@@ -4,6 +4,9 @@ public class JoinGameRequest {
     private Integer playerId;
     private Integer gameId;
 
+    public JoinGameRequest() {
+    }
+
     public Integer getPlayerId() {
         return playerId;
     }
