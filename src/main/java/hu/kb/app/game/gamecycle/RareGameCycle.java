@@ -2,6 +2,7 @@ package hu.kb.app.game.gamecycle;
 
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.quiz.Question;
+import hu.kb.app.game.quiz.Result;
 import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
 
@@ -9,16 +10,14 @@ import java.util.*;
 
 public class RareGameCycle implements GameCycle {
 
-
-
-    Integer id;
+    private Integer id;
 
     private List<Player> players = new ArrayList<>();
     private Status status;
 
     private Question question;
 
-    private List<Answer> answers = new ArrayList<>();
+    private Map<Player, Answer> answers = new HashMap<>();
 
     public RareGameCycle() {
     }
@@ -40,28 +39,45 @@ public class RareGameCycle implements GameCycle {
     }
 
     @Override
-    public void handleAnswer(Answer answer) {
-        answers.add(answer);
+    public void handleAnswer(Player player, Answer answer) {
+        answers.put(player, answer);
     }
 
     @Override
-    public String evaluateResults() {
+    public Result evaluateResults() {
         this.status = Status.ENDED;
+        Result result = new Result();
         Map<String,Integer> answerCounts = new HashMap<>();
-        StringBuilder result = new StringBuilder();
-        for (Answer answer:answers){
-            String currentAns = answer.getAnswer();
-            answerCounts.merge(currentAns, 1, (a, b) -> a + b);
+
+        //Making a map of guesses
+        for (Map.Entry<Player, Answer> entry: answers.entrySet()){
+            String answer = entry.getValue().getAnswer();
+            answerCounts.merge(answer, 1, (a, b) -> a + b);
         }
-        for (String guess : answerCounts.keySet()){
-            if(answerCounts.get(guess).equals(Collections.max(answerCounts.values()))){
-                result.append(guess);
-                result.append(",");
+        Integer maximumguess = Collections.max(answerCounts.values());
+        List<String> listOfPlayerWithMaximumGuesses = new ArrayList<>();
+        //Making a list of players with the maximum guess
+        for (Map.Entry<Player, Answer> entry : answers.entrySet()){
+            if(entry.getValue().getAnswer().equals(maximumguess.toString())){
+                listOfPlayerWithMaximumGuesses.add(entry.getKey().getName());
+            }
+        }//Selecting who managed to guess a people with the maximum amount of guess
+        for (Map.Entry<Player, Answer> entry: answers.entrySet()){
+            if(listOfPlayerWithMaximumGuesses.contains(entry.getValue().getAnswer())){
+                result.getWinners().add(entry.getKey());
+            } else {
+                result.getLosers().add(entry.getKey());
             }
         }
+        return result;
+    }
 
-        return result.toString();
+    public Map<Player, Answer> getAnswers() {
+        return answers;
+    }
 
+    public void setAnswers(Map<Player, Answer> answers) {
+        this.answers = answers;
     }
 
     public Status getStatus() {
@@ -86,14 +102,6 @@ public class RareGameCycle implements GameCycle {
 
     public void setQuestion(Question question) {
         this.question = question;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
     }
 
 

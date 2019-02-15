@@ -1,6 +1,4 @@
-package hu.kb.app.apiobjects;
-
-import hu.kb.app.player.Player;
+package hu.kb.app.api;
 
 public class JoinGameRequest {
     private Integer playerId;
