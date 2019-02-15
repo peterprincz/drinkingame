@@ -64,7 +64,7 @@ class GameController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RareGame> joinGame(@RequestBody JoinGameRequest joinGameRequest){
-        return ResponseEntity.ok(gameService.joinGame(joinGameRequest.getPlayerId(),joinGameRequest.getId()));
+        return ResponseEntity.ok(gameService.joinGame(joinGameRequest.getPlayerId(),joinGameRequest.getGameId()));
     }
 
     @RequestMapping(

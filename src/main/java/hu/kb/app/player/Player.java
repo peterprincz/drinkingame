@@ -50,6 +50,7 @@ public class Player {
         return drinkCount;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,5 +62,17 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", weight=" + weight +
+                ", drinkType=" + drinkType +
+                ", drinkCount=" + drinkCount +
+                '}';
     }
 }
