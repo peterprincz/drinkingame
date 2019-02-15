@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "88ebc747-aee3-47e3-9ea3-8dd24033edee",
+		"name": "drinkinGame",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateGame",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"gameName\": \"gameOne\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/create-game",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"create-game"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePlayer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"gameName\": \"gameOne\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/create-game",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"create-game"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JoinGame",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"gameName\": \"gameOne\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/create-game",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"create-game"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "startGame",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"gameName\": \"gameOne\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/create-game",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"create-game"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sendAnswer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"gameName\": \"gameOne\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/create-game",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"create-game"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
