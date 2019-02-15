@@ -2,7 +2,7 @@ package hu.kb.app.api;
 
 public class JoinGameRequest {
     private Integer playerId;
-    private Integer id;
+    private Integer gameId;
 
     public Integer getPlayerId() {
         return playerId;
@@ -12,11 +12,11 @@ public class JoinGameRequest {
         this.playerId = playerId;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getGameId() {
+        return gameId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setGameId(Integer gameId) {
+        this.gameId = gameId;
     }
 }
