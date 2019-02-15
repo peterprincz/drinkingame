@@ -4,6 +4,7 @@ import hu.kb.app.game.gamecycle.GameCycle;
 import hu.kb.app.game.gamecycle.RareGameCycle;
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.quiz.Question;
+import hu.kb.app.game.quiz.Result;
 import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
 
@@ -12,42 +13,43 @@ import java.util.List;
 
 public class RareGame {
 
-    static Integer IntegerCounter = 0;
+    private String name;
 
-    Integer id;
+    private static Integer IntegerCounter = 0;
+
+    private Integer id;
 
     private List<Player> players  = new ArrayList<>();
 
-    List<GameCycle> gameCycleList = new ArrayList<>();
+    private List<GameCycle> gameCycleList = new ArrayList<>();
 
-    GameCycle activeGameCycle;
+    private GameCycle activeGameCycle;
 
     public RareGame() {
     }
 
-    public RareGame fillWithQuestions(List<Question> questions){
+    public void fillWithQuestions(List<Question> questions){
         questions.forEach(x-> gameCycleList.add(new RareGameCycle(x)));
-        return this;
     }
 
-    public Question startGameCycle(){
+    public void startGameCycle(){
         activeGameCycle = gameCycleList.get(0);
         this.players.forEach(activeGameCycle::join);
         activeGameCycle.setStatus(Status.PREPARED);
-        return activeGameCycle.start();
+        activeGameCycle.start();
     }
 
 
-    public void sendAnswerToGameCycle(Answer answer){
+    public void sendAnswerToGameCycle(Player player, Answer answer){
         if( activeGameCycle == null || activeGameCycle.getStatus() != Status.ONGOING){
             throw new IllegalStateException("Game isn't going yet/is over yet :(");
         } else{
-            activeGameCycle.handleAnswer(answer);
+            activeGameCycle.handleAnswer(player, answer);
         }
     }
 
-    public String evaluteCycle(){
-        String result = activeGameCycle.evaluateResults();
+    public Result evaluteCycle(){
+        Result result = activeGameCycle.evaluateResults();
         this.gameCycleList.remove(0);
         this.activeGameCycle = null;
         return result;
@@ -65,11 +67,11 @@ public class RareGame {
         this.players = players;
     }
 
-    public static Integer getIntegerCounter() {
+    private static Integer getIntegerCounter() {
         return IntegerCounter;
     }
 
-    public static void setIntegerCounter(Integer integerCounter) {
+    private static void setIntegerCounter(Integer integerCounter) {
         IntegerCounter = integerCounter;
     }
 
@@ -77,7 +79,7 @@ public class RareGame {
         return id;
     }
 
-    public void setId(Integer id) {
+    private void setId(Integer id) {
         this.id = id;
     }
 
@@ -100,5 +102,14 @@ public class RareGame {
     public void generateAndSetId(){
         setId(RareGame.getIntegerCounter());
         RareGame.setIntegerCounter(RareGame.getIntegerCounter() + 1);
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
