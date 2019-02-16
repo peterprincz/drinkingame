@@ -22,7 +22,7 @@ public abstract class GameCycle {
 
 
     public abstract void join(Player player) throws GameException;
-    public abstract Question start() throws GameException;
+    public abstract Question start(List<Player> players) throws GameException;
     public abstract void handleAnswer(Player player, Answer answer) throws GameException;
     public abstract Result evaluateResults() throws GameException;
 

@@ -25,14 +25,12 @@ public class RareGameCycle extends GameCycle {
 
     @Override
     public void join(Player player) throws GameException {
-        if(status != Status.ONGOING){
-            throw new IllegalGameStateException(status);
-        }
-        players.add(player);
+        return;
     }
 
     @Override
-    public Question start() throws GameException {
+    public Question start(List<Player> players) throws GameException {
+        this.players.addAll(players);
         if(this.status != Status.CREATED){
             throw new IllegalGameStateException(status);
         }

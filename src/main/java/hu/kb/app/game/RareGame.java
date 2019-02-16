@@ -36,10 +36,7 @@ public class RareGame {
     //TODO MAKE IT TO PREAPRED
     public void startGameCycle() throws GameException{
         activeGameCycle = gameCycleList.get(0);
-        for (Player player : this.players) {
-            activeGameCycle.join(player);
-        }
-        activeGameCycle.start();
+        activeGameCycle.start(this.players);
     }
 
 
