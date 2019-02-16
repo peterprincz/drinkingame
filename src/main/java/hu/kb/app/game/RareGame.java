@@ -50,7 +50,7 @@ public class RareGame {
     public Result evaluteCycle() throws GameException {
         Result result = activeGameCycle.evaluateResults();
         this.gameCycleList.remove(0);
-        this.activeGameCycle = null;
+        this.activeGameCycle = this.gameCycleList.get(0);
         return result;
     }
 
