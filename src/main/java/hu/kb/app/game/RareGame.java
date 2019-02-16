@@ -1,11 +1,11 @@
 package hu.kb.app.game;
 
+import hu.kb.app.api.exceptions.GameException;
 import hu.kb.app.game.gamecycle.GameCycle;
 import hu.kb.app.game.gamecycle.RareGameCycle;
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.quiz.Result;
-import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
 
 import java.util.ArrayList;
@@ -32,23 +32,22 @@ public class RareGame {
         questions.forEach(x-> gameCycleList.add(new RareGameCycle(x)));
     }
 
-    public void startGameCycle(){
+
+    //TODO MAKE IT TO PREAPRED
+    public void startGameCycle() throws GameException{
         activeGameCycle = gameCycleList.get(0);
-        this.players.forEach(activeGameCycle::join);
-        activeGameCycle.setStatus(Status.PREPARED);
+        for (Player player : this.players) {
+            activeGameCycle.join(player);
+        }
         activeGameCycle.start();
     }
 
 
-    public void sendAnswerToGameCycle(Player player, Answer answer){
-        if( activeGameCycle == null || activeGameCycle.getStatus() != Status.ONGOING){
-            throw new IllegalStateException("Game isn't going yet/is over yet :(");
-        } else{
-            activeGameCycle.handleAnswer(player, answer);
-        }
+    public void sendAnswerToGameCycle(Player player, Answer answer) throws GameException{
+        activeGameCycle.handleAnswer(player, answer);
     }
 
-    public Result evaluteCycle(){
+    public Result evaluteCycle() throws GameException {
         Result result = activeGameCycle.evaluateResults();
         this.gameCycleList.remove(0);
         this.activeGameCycle = null;

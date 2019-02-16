@@ -1,7 +1,10 @@
 package hu.kb.app.service;
 
+import hu.kb.app.api.exceptions.GameException;
+import hu.kb.app.api.exceptions.GameNotFoundException;
+import hu.kb.app.api.exceptions.PlayerNotFoundException;
+import hu.kb.app.game.RareGameFactory;
 import hu.kb.app.game.quiz.Answer;
-import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.RareGame;
 import hu.kb.app.game.quiz.Result;
 import hu.kb.app.player.Player;
@@ -26,14 +29,8 @@ public class GameService {
     }
 
     public RareGame createGame(String gameName){
-        RareGame rareGame = new RareGame();
-        rareGame.setName(gameName);
-        rareGame.generateAndSetId();
-        rareGame.fillWithQuestions(Arrays.asList(
-                new Question("What the fuck am i doing here?",Arrays.asList("hoppá","hopp")),
-                new Question("What the fuck am i doing here?",Arrays.asList("dik","komoly"))
-        ));
-        rareGameList.add(rareGame);
+        RareGame rareGame = RareGameFactory.createRareGameWithDefaultQuestions(gameName);
+        this.rareGameList.add(rareGame);
         return rareGame;
     }
 
@@ -41,27 +38,27 @@ public class GameService {
         return playerRepository.save(player);
     }
 
-    public RareGame joinGame(Integer playerId,Integer gameId){
-        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new RuntimeException("Game not found with the id of" + gameId));
-        rareGame.addPlayer(playerRepository.findById(playerId).orElseThrow(() -> new RuntimeException("Player not found with the id of" + playerId)));
+    public RareGame joinGame(Integer playerId,Integer gameId) throws GameException{
+        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
+        rareGame.addPlayer(playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId)));
         return rareGame;
     }
 
-    public RareGame startGameCycle(Integer gameId){
-        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new RuntimeException("Game not found with the id of" + gameId));
+    public RareGame startGameCycle(Integer gameId) throws GameException {
+        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() ->  new GameNotFoundException(gameId));
         rareGame.startGameCycle();
         return rareGame;
     }
 
-    public RareGame sendAnswerToGame(Integer playerId, Answer answer){
-        Player player = playerRepository.findById(playerId).orElseThrow(() -> new RuntimeException("Player not found with the id of" + playerId));
-        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(answer.getGameId())).findFirst().orElseThrow(RuntimeException::new);
+    public RareGame sendAnswerToGame(Integer playerId, Answer answer) throws GameException {
+        Player player = playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
+        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(answer.getGameId())).findFirst().orElseThrow(() ->  new GameNotFoundException(answer.getGameId()));
         rareGame.sendAnswerToGameCycle(player, answer);
         return rareGame;
     }
 
-    public Result evaluateGameCycle(Integer gameId){
-        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new RuntimeException("Game not found with the id of" + gameId));
+    public Result evaluateGameCycle(Integer gameId) throws GameException {
+        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
         return rareGame.evaluteCycle();
     }
 

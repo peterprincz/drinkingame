@@ -1,5 +1,8 @@
 package hu.kb.app.game.gamecycle;
 
+import hu.kb.app.api.exceptions.GameException;
+import hu.kb.app.api.exceptions.IllegalGameStateException;
+import hu.kb.app.api.exceptions.NoAnswersException;
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.quiz.Result;
@@ -21,27 +24,38 @@ public class RareGameCycle extends GameCycle {
     }
 
     @Override
-    public void join(Player player) {
+    public void join(Player player) throws GameException {
+        if(status != Status.ONGOING){
+            throw new IllegalGameStateException(status);
+        }
         players.add(player);
     }
 
     @Override
-    public Question start() {
+    public Question start() throws GameException {
+        if(this.status != Status.CREATED){
+            throw new IllegalGameStateException(status);
+        }
         this.status = Status.ONGOING;
         return this.question;
     }
 
     @Override
-    public void handleAnswer(Player player, Answer answer) {
+    public void handleAnswer(Player player, Answer answer) throws GameException {
+       if(status != Status.ONGOING){
+           throw new IllegalGameStateException(status);
+       }
         answers.put(player, answer);
     }
 
     @Override
-    public Result evaluateResults() {
+    public Result evaluateResults() throws GameException {
         this.status = Status.ENDED;
         Result result = new Result();
         Map<String,Integer> answerCounts = new HashMap<>();
-
+        if(answers.isEmpty()){
+            throw new NoAnswersException("There isn't any answer in the Cycle to evaluate");
+        }
         //Making a map of guesses
         for (Map.Entry<Player, Answer> entry: answers.entrySet()){
             String answer = entry.getValue().getAnswer();
