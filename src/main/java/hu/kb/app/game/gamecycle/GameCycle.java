@@ -1,5 +1,6 @@
 package hu.kb.app.game.gamecycle;
 
+import hu.kb.app.api.exceptions.GameException;
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.quiz.Result;
@@ -20,10 +21,10 @@ public abstract class GameCycle {
     protected Map<Player, Answer> answers = new HashMap<>();
 
 
-    public abstract void join(Player player);
-    public abstract Question start();
-    public abstract void handleAnswer(Player player, Answer answer);
-    public abstract Result evaluateResults();
+    public abstract void join(Player player) throws GameException;
+    public abstract Question start() throws GameException;
+    public abstract void handleAnswer(Player player, Answer answer) throws GameException;
+    public abstract Result evaluateResults() throws GameException;
 
 
     public Integer getId() {
