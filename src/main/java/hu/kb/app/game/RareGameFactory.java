@@ -12,7 +12,7 @@ public class RareGameFactory {
         RareGame rareGame = new RareGame();
         rareGame.setName(gameName);
         rareGame.generateAndSetId();
-        rareGame.fillWithQuestions(questionList);
+        rareGame.fillWithCycles(questionList);
         return rareGame;
     }
 
@@ -20,9 +20,9 @@ public class RareGameFactory {
         RareGame rareGame = new RareGame();
         rareGame.setName(gameName);
         rareGame.generateAndSetId();
-        rareGame.fillWithQuestions(Arrays.asList(new Question("QUESTION1", Arrays.asList("optionOne", "optionTwo"))));
-        rareGame.fillWithQuestions(Arrays.asList(new Question("QUESTION2", Arrays.asList("optionOne", "optionTwo"))));
-        rareGame.fillWithQuestions(Arrays.asList(new Question("QUESTION3", Arrays.asList("optionOne", "optionTwo"))));
+        rareGame.fillWithCycles(Arrays.asList(new Question("QUESTION1", Arrays.asList("optionOne", "optionTwo"))));
+        rareGame.fillWithCycles(Arrays.asList(new Question("QUESTION2", Arrays.asList("optionOne", "optionTwo"))));
+        rareGame.fillWithCycles(Arrays.asList(new Question("QUESTION3", Arrays.asList("optionOne", "optionTwo"))));
         rareGame.setActiveGameCycle(rareGame.getGameCycleList().get(0));
         return rareGame;
     }
