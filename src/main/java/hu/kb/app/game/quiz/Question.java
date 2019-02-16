@@ -4,12 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
 public class Question {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
 
 
     private String question;
@@ -33,14 +28,6 @@ public class Question {
         this.question = question;
     }
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     @Override
     public boolean equals(Object o) {

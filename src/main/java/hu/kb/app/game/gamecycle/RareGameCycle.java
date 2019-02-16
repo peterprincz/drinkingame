@@ -25,14 +25,12 @@ public class RareGameCycle extends GameCycle {
 
     @Override
     public void join(Player player) throws GameException {
-        if(status != Status.ONGOING){
-            throw new IllegalGameStateException(status);
-        }
-        players.add(player);
+        return;
     }
 
     @Override
-    public Question start() throws GameException {
+    public Question start(List<Player> players) throws GameException {
+        this.players.addAll(players);
         if(this.status != Status.CREATED){
             throw new IllegalGameStateException(status);
         }
@@ -50,7 +48,6 @@ public class RareGameCycle extends GameCycle {
 
     @Override
     public Result evaluateResults() throws GameException {
-        this.status = Status.ENDED;
         Result result = new Result();
         Map<String,Integer> answerCounts = new HashMap<>();
         if(answers.isEmpty()){
@@ -77,6 +74,7 @@ public class RareGameCycle extends GameCycle {
                 result.getLosers().add(entry.getKey());
             }
         }
+        this.status = Status.ENDED;
         return result;
     }
 
