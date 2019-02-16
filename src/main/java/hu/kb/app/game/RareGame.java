@@ -28,8 +28,8 @@ public class RareGame {
     public RareGame() {
     }
 
-    public void fillWithQuestions(List<Question> questions){
-        questions.forEach(x-> gameCycleList.add(new RareGameCycle(x)));
+    public void fillWithCycles(List<Question> questions){
+        questions.forEach(question-> gameCycleList.add(new RareGameCycle(question)));
     }
 
 
