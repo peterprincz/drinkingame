@@ -101,8 +101,9 @@ class GameController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Result> endGame(@RequestBody EndGameRequest endGameRequest) throws GameException {
         logger.debug("request to end a game with the id of "+ endGameRequest.getGameId());
-        simpMessagingTemplate.convertAndSend("/game/end", "the game has ended");
-        return ResponseEntity.ok(gameService.evaluateGameCycle(endGameRequest.getGameId()));
+        Result result = gameService.evaluateGameCycle(endGameRequest.getGameId());
+        simpMessagingTemplate.convertAndSend("/game/end", result);
+        return ResponseEntity.ok(result);
     }
 
 }
