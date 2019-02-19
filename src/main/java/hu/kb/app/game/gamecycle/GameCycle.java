@@ -1,5 +1,10 @@
 package hu.kb.app.game.gamecycle;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import hu.kb.app.api.exceptions.GameException;
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.quiz.Question;
@@ -12,12 +17,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = RareGameCycle.class, name = "RareGameCycle")
+        }
+)
 public abstract class GameCycle {
 
     protected Integer id;
     protected List<Player> players = new ArrayList<>();
     protected Status status;
     protected Question question;
+    @JsonIgnore
     protected Map<Player, Answer> answers = new HashMap<>();
 
 

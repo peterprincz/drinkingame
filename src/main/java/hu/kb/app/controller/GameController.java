@@ -13,13 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
 
 @RestController
-class GameController {
+public class GameController {
 
-    @Autowired
+    @Autowired(required = true)
     private SimpMessagingTemplate simpMessagingTemplate;
 
     Logger logger = LoggerFactory.getLogger(GameController.class);

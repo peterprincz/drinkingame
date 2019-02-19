@@ -21,9 +21,9 @@ public class RareGame {
 
     private List<Player> players  = new ArrayList<>();
 
-    private List<GameCycle> gameCycleList = new ArrayList<>();
+    private List<RareGameCycle> gameCycleList = new ArrayList<>();
 
-    private GameCycle activeGameCycle;
+    private RareGameCycle activeGameCycle;
 
     public RareGame() {
     }
@@ -47,7 +47,11 @@ public class RareGame {
     public Result evaluteCycle() throws GameException {
         Result result = activeGameCycle.evaluateResults();
         this.gameCycleList.remove(0);
-        this.activeGameCycle = this.gameCycleList.get(0);
+        if(gameCycleList.size() > 0){
+            this.activeGameCycle = this.gameCycleList.get(0);
+        } else {
+            result.setLastQuestion(true);
+        }
         return result;
     }
 
@@ -79,11 +83,11 @@ public class RareGame {
         this.id = id;
     }
 
-    public List<GameCycle> getGameCycleList() {
+    public List<RareGameCycle> getGameCycleList() {
         return gameCycleList;
     }
 
-    public void setGameCycleList(List<GameCycle> gameCycleList) {
+    public void setGameCycleList(List<RareGameCycle> gameCycleList) {
         this.gameCycleList = gameCycleList;
     }
 
@@ -91,7 +95,7 @@ public class RareGame {
         return activeGameCycle;
     }
 
-    public void setActiveGameCycle(GameCycle activeGameCycle) {
+    public void setActiveGameCycle(RareGameCycle activeGameCycle) {
         this.activeGameCycle = activeGameCycle;
     }
 

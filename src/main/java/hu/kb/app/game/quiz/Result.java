@@ -9,6 +9,7 @@ public class Result {
     private String result;
     private List<Player> winners = new ArrayList<>();
     private List<Player> losers = new ArrayList<>();
+    private boolean lastQuestion = false;
 
     public String getResult() {
         return result;
@@ -32,5 +33,13 @@ public class Result {
 
     public void setLosers(List<Player> losers) {
         this.losers = losers;
+    }
+
+    public boolean isLastQuestion() {
+        return lastQuestion;
+    }
+
+    public void setLastQuestion(boolean lastQuestion) {
+        this.lastQuestion = lastQuestion;
     }
 }

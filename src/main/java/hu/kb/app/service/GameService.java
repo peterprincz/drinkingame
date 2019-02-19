@@ -59,7 +59,9 @@ public class GameService {
 
     public Result evaluateGameCycle(Integer gameId) throws GameException {
         RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
-        return rareGame.evaluteCycle();
+        Result result = rareGame.evaluteCycle();
+        rareGameList.remove(rareGame);
+        return result;
     }
 
 }

@@ -75,4 +75,24 @@ public class Player {
                 ", drinkCount=" + drinkCount +
                 '}';
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setDrinkType(DrinkType drinkType) {
+        this.drinkType = drinkType;
+    }
+
+    public void setDrinkCount(int drinkCount) {
+        this.drinkCount = drinkCount;
+    }
 }
