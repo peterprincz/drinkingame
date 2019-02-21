@@ -17,10 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = RareGameCycle.class, name = "RareGameCycle")
-        }
-)
 public abstract class GameCycle {
 
     protected Integer id;

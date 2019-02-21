@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ControllerTest {
+public class IntegrationTest {
 
     @Autowired
     GameController gameController;
@@ -144,6 +144,62 @@ public class ControllerTest {
                 .andExpect(jsonPath("$.winners", hasSize(1)))
                 .andExpect(jsonPath("$.losers", hasSize(0)))
                 .andReturn();
+
+
+        MvcResult startGame2Result = mockMvc.perform(post("/start-game")
+                .content(startGameRequestJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.activeGameCycle.status", is("ONGOING")))
+                .andReturn();
+
+
+
+        MvcResult sendAnswer2Result = mockMvc.perform(post("/send-answer")
+                .content(sendAnswerRequestJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        MvcResult endGame2Result = mockMvc.perform(post("/end-game")
+                .content(endGameRequestJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result",is("[BÉLA]")))
+                .andExpect(jsonPath("$.lastQuestion", is(false)))
+                .andExpect(jsonPath("$.winners", hasSize(1)))
+                .andExpect(jsonPath("$.winners[0].drinkCount", is(2)))
+                .andExpect(jsonPath("$.losers", hasSize(0)))
+                .andReturn();
+
+
+        MvcResult startGame3Result = mockMvc.perform(post("/start-game")
+                .content(startGameRequestJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.activeGameCycle.status", is("ONGOING")))
+                .andReturn();
+
+
+
+        MvcResult sendAnswer3Result = mockMvc.perform(post("/send-answer")
+                .content(sendAnswerRequestJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        MvcResult endGame3Result = mockMvc.perform(post("/end-game")
+                .content(endGameRequestJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result",is("[BÉLA]")))
+                .andExpect(jsonPath("$.lastQuestion", is(true)))
+                .andExpect(jsonPath("$.winners", hasSize(1)))
+                .andExpect(jsonPath("$.losers", hasSize(0)))
+                .andReturn();
     }
+
 
 }

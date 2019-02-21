@@ -60,8 +60,16 @@ public class GameService {
     public Result evaluateGameCycle(Integer gameId) throws GameException {
         RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
         Result result = rareGame.evaluteCycle();
-        rareGameList.remove(rareGame);
+        result.getWinners().forEach(Player::drink);
+        //Update DB
+        playerRepository.saveAll(result.getWinners());
+        if(result.isLastQuestion()){
+            rareGameList.remove(rareGame);
+        }
         return result;
     }
 
+    public RareGame getGameById(Integer id) throws GameNotFoundException {
+        return rareGameList.stream().filter(x -> x.getId().equals(id)).findFirst().orElseThrow(() -> new GameNotFoundException(id));
+    }
 }
