@@ -13,13 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
 
 @RestController
-class GameController {
+public class GameController {
 
-    @Autowired
+    @Autowired(required = true)
     private SimpMessagingTemplate simpMessagingTemplate;
 
     Logger logger = LoggerFactory.getLogger(GameController.class);
@@ -38,6 +39,16 @@ class GameController {
     public ResponseEntity<List<RareGame>> getGames() throws GameException {
         logger.debug("Request to get all games");
         return ResponseEntity.ok(gameService.getGames());
+    }
+
+    @RequestMapping(
+            path = "get-game/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<RareGame> getGame(@PathVariable Integer id) throws GameException {
+        logger.debug("Request to get game with id of " + id);
+        return ResponseEntity.ok(gameService.getGameById(id));
     }
 
     @RequestMapping(
@@ -68,8 +79,9 @@ class GameController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RareGame> joinGame(@RequestBody JoinGameRequest joinGameRequest) throws GameException{
         logger.debug("Request to join the the game " + joinGameRequest.getGameId() + " with the player" + joinGameRequest.getPlayerId());
+        RareGame rareGame = gameService.joinGame(joinGameRequest.getPlayerId(),joinGameRequest.getGameId());
         simpMessagingTemplate.convertAndSend("/game/join/" + joinGameRequest.getGameId(),"connected to the game");
-        return ResponseEntity.ok(gameService.joinGame(joinGameRequest.getPlayerId(),joinGameRequest.getGameId()));
+        return ResponseEntity.ok(rareGame);
     }
 
     @RequestMapping(
