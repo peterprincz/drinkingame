@@ -71,12 +71,11 @@ class RareGameTest {
 
     @org.junit.jupiter.api.Test
     void evaluteCycle() throws GameException {
-        rareGame.generateAndSetId();
         Player player1 = new Player("karcsi",80, DrinkType.BEER);
         Player player2 = new Player("pista",80, DrinkType.BEER);
         Player player3 = new Player("béla",80, DrinkType.BEER);
         Answer answer = new Answer(0,"josko");
-        rareGame.fillWithCycles(Collections.singletonList(new Question("question", Arrays.asList("option", "option1"))));
+        rareGame = RareGameFactory.createRareGame((Collections.singletonList(new Question("question", Arrays.asList("option", "option1")))), "gameOne");
         rareGame.addPlayer(player1);
         rareGame.addPlayer(player2);
         rareGame.addPlayer(player3);

@@ -1,6 +1,8 @@
 package hu.kb.app.player;
 
 import hu.kb.app.player.drinksetting.DrinkType;
+import hu.kb.app.player.drinksetting.SipType;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,47 +11,31 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Player {
+public @Data
+class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
     private double weight;
     private DrinkType drinkType;
-    private int drinkCount = 0;
+    private SipType sipType = SipType.MEDIUM;
+    private Double alcoholConsumed = 0.0;
+    private Double alcoholPercentage = 0.0;
+
+
 
     public Player(){}
+
+    public void drink(){
+        this.alcoholConsumed += sipType.getMl();
+    }
 
     public Player(String name, double weight, DrinkType drinkType) {
         this.name = name;
         this.weight = weight;
         this.drinkType = drinkType;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public DrinkType getDrinkType() {
-        return drinkType;
-    }
-
-    public void drink(){
-        drinkCount ++;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public int getDrinkCount() {
-        return drinkCount;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -72,27 +58,7 @@ public class Player {
                 ", name='" + name + '\'' +
                 ", weight=" + weight +
                 ", drinkType=" + drinkType +
-                ", drinkCount=" + drinkCount +
+                ", alcoholConsumed=" + alcoholConsumed +
                 '}';
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public void setDrinkType(DrinkType drinkType) {
-        this.drinkType = drinkType;
-    }
-
-    public void setDrinkCount(int drinkCount) {
-        this.drinkCount = drinkCount;
     }
 }

@@ -1,33 +1,24 @@
 package hu.kb.app.game.quiz;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
-public class Question {
+public @Data @NoArgsConstructor
+class Question {
 
 
     private String question;
 
     private List<String> options;
 
-
-    public Question() {
-    }
-
     public Question(String question, List<String> options) {
         this.question = question;
         this.options = options;
     }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -40,13 +31,5 @@ public class Question {
     @Override
     public int hashCode() {
         return Objects.hash(question);
-    }
-
-    public List<String> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<String> options) {
-        this.options = options;
     }
 }

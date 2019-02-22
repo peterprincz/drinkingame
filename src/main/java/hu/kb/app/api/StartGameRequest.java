@@ -1,14 +1,11 @@
 package hu.kb.app.api;
 
-public class StartGameRequest {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+public @Data @NoArgsConstructor
+class StartGameRequest {
 
     private Integer gameId;
 
-    public Integer getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(Integer gameId) {
-        this.gameId = gameId;
-    }
 }
