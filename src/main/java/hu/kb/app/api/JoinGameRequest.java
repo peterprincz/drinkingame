@@ -1,25 +1,10 @@
 package hu.kb.app.api;
 
-public class JoinGameRequest {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+public @Data @NoArgsConstructor
+class JoinGameRequest {
     private Integer playerId;
     private Integer gameId;
-
-    public JoinGameRequest() {
-    }
-
-    public Integer getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(Integer playerId) {
-        this.playerId = playerId;
-    }
-
-    public Integer getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(Integer gameId) {
-        this.gameId = gameId;
-    }
 }

@@ -8,15 +8,14 @@ import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.quiz.Result;
 import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.*;
 
-public class RareGameCycle extends GameCycle {
+public @Data @NoArgsConstructor
+class RareGameCycle extends GameCycle {
 
-
-
-    public RareGameCycle() {
-    }
 
     public RareGameCycle(Question question) {
         this.status = Status.CREATED;
@@ -78,44 +77,4 @@ public class RareGameCycle extends GameCycle {
         return result;
     }
 
-    public Map<Player, Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(Map<Player, Answer> answers) {
-        this.answers = answers;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

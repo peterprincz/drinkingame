@@ -1,5 +1,6 @@
 package hu.kb.app.service;
 
+import hu.kb.app.api.CreateGameRequest;
 import hu.kb.app.api.exceptions.GameException;
 import hu.kb.app.api.exceptions.GameNotFoundException;
 import hu.kb.app.api.exceptions.PlayerNotFoundException;
@@ -21,6 +22,9 @@ public class GameService {
     private
     PlayerRepository playerRepository;
 
+    @Autowired
+    private AlcoholCalculatorService alcoholCalculatorService;
+
     private List<RareGame> rareGameList = new ArrayList<>();
 
 
@@ -28,8 +32,13 @@ public class GameService {
         return rareGameList;
     }
 
-    public RareGame createGame(String gameName){
-        RareGame rareGame = RareGameFactory.createRareGameWithDefaultQuestions(gameName);
+    public RareGame createGame(CreateGameRequest createGameRequest){
+        RareGame rareGame;
+        if(createGameRequest.getQuestions() == null || createGameRequest.getQuestions().isEmpty()) {
+            rareGame = RareGameFactory.createRareGameWithDefaultQuestions(createGameRequest.getGameName());
+        } else {
+            rareGame = RareGameFactory.createRareGame(createGameRequest.getQuestions(), createGameRequest.getGameName());
+        }
         this.rareGameList.add(rareGame);
         return rareGame;
     }
@@ -60,9 +69,16 @@ public class GameService {
     public Result evaluateGameCycle(Integer gameId) throws GameException {
         RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
         Result result = rareGame.evaluteCycle();
-        result.getWinners().forEach(Player::drink);
+        result.getWinners().forEach(player -> {
+                        player.drink();
+                        player.setAlcoholPercentage(alcoholCalculatorService.calculateBAC(
+                                player.getAlcoholConsumed(),
+                                player.getDrinkType(),
+                                player.getWeight(),
+                                "MALE"));
+                        playerRepository.save(player);
+        });
         //Update DB
-        playerRepository.saveAll(result.getWinners());
         if(result.isLastQuestion()){
             rareGameList.remove(rareGame);
         }

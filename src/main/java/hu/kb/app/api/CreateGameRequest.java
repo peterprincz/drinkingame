@@ -1,14 +1,16 @@
 package hu.kb.app.api;
 
-public class CreateGameRequest {
+import hu.kb.app.game.quiz.Question;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+public @Data
+@NoArgsConstructor
+class CreateGameRequest {
 
     private String gameName;
 
-    public String getGameName() {
-        return gameName;
-    }
-
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
-    }
+    private List<Question> questions;
 }

@@ -6,16 +6,18 @@ import hu.kb.app.game.gamecycle.RareGameCycle;
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.quiz.Result;
+import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RareGame {
+public @Data @NoArgsConstructor
+class RareGame {
 
     private String name;
-
-    private static Integer IntegerCounter = 0;
 
     private Integer id;
 
@@ -25,20 +27,23 @@ public class RareGame {
 
     private RareGameCycle activeGameCycle;
 
-    public RareGame() {
+    private Status status;
+
+    public void addPlayer(Player player){
+        this.players.add(player);
     }
 
     public void fillWithCycles(List<Question> questions){
         questions.forEach(question-> gameCycleList.add(new RareGameCycle(question)));
     }
 
-
-    //TODO MAKE IT TO PREAPRED
     public void startGameCycle() throws GameException{
-        activeGameCycle = gameCycleList.get(0);
+        if(activeGameCycle == null){
+            setStatus(Status.ONGOING);
+            activeGameCycle = gameCycleList.get(0);
+        }
         activeGameCycle.start(this.players);
     }
-
 
     public void sendAnswerToGameCycle(Player player, Answer answer) throws GameException{
         activeGameCycle.handleAnswer(player, answer);
@@ -50,66 +55,10 @@ public class RareGame {
         if(gameCycleList.size() > 0){
             this.activeGameCycle = this.gameCycleList.get(0);
         } else {
+            setStatus(Status.ENDED);
             result.setLastQuestion(true);
         }
         return result;
     }
 
-    public void addPlayer(Player player){
-        players.add(player);
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
-    private static Integer getIntegerCounter() {
-        return IntegerCounter;
-    }
-
-    private static void setIntegerCounter(Integer integerCounter) {
-        IntegerCounter = integerCounter;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    private void setId(Integer id) {
-        this.id = id;
-    }
-
-    public List<RareGameCycle> getGameCycleList() {
-        return gameCycleList;
-    }
-
-    public void setGameCycleList(List<RareGameCycle> gameCycleList) {
-        this.gameCycleList = gameCycleList;
-    }
-
-    public GameCycle getActiveGameCycle() {
-        return activeGameCycle;
-    }
-
-    public void setActiveGameCycle(RareGameCycle activeGameCycle) {
-        this.activeGameCycle = activeGameCycle;
-    }
-
-    public void generateAndSetId(){
-        setId(RareGame.getIntegerCounter());
-        RareGame.setIntegerCounter(RareGame.getIntegerCounter() + 1);
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
