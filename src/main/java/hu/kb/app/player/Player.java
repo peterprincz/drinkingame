@@ -24,7 +24,6 @@ class Player {
     private Double alcoholPercentage = 0.0;
 
 
-
     public Player(){}
 
     public void drink(){
@@ -61,4 +60,5 @@ class Player {
                 ", alcoholConsumed=" + alcoholConsumed +
                 '}';
     }
+
 }

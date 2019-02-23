@@ -4,16 +4,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public @Data @NoArgsConstructor
 class Question {
 
-
     private String question;
 
-    private List<String> options;
+    private List<String> options = new ArrayList<>();
 
     public Question(String question, List<String> options) {
         this.question = question;
