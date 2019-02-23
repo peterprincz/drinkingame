@@ -33,9 +33,15 @@ class RareGameCycle extends GameCycle {
         if(this.status != Status.CREATED){
             throw new IllegalGameStateException(status);
         }
+        //FOR TESTING
+        this.question.getOptions().clear();
+        players.forEach(player -> {
+            question.getOptions().add(player.getName());
+        });
         this.status = Status.ONGOING;
         return this.question;
     }
+
 
     @Override
     public void handleAnswer(Player player, Answer answer) throws GameException {
