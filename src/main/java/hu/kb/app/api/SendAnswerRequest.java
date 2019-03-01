@@ -8,7 +8,6 @@ public @Data @NoArgsConstructor
 class SendAnswerRequest {
 
     private Integer playerId;
-
     private Answer answer;
 
 }

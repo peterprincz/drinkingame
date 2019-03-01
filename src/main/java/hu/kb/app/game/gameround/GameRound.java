@@ -1,11 +1,7 @@
-package hu.kb.app.game.gamecycle;
+package hu.kb.app.game.gameround;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.MapSerializer;
-import hu.kb.app.api.exceptions.GameException;
+import hu.kb.app.exceptions.GameException;
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.quiz.Result;
@@ -17,9 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class GameCycle {
+public abstract class GameRound {
 
-    protected Integer id;
     protected List<Player> players = new ArrayList<>();
     protected Status status;
     protected Question question;
@@ -32,14 +27,6 @@ public abstract class GameCycle {
     public abstract void handleAnswer(Player player, Answer answer) throws GameException;
     public abstract Result evaluateResults() throws GameException;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public List<Player> getPlayers() {
         return players;

@@ -1,8 +1,8 @@
-package hu.kb.app.game.gamecycle;
+package hu.kb.app.game.gameround;
 
-import hu.kb.app.api.exceptions.GameException;
-import hu.kb.app.api.exceptions.IllegalGameStateException;
-import hu.kb.app.api.exceptions.NoAnswersException;
+import hu.kb.app.exceptions.GameException;
+import hu.kb.app.exceptions.IllegalGameStateException;
+import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.quiz.Result;
@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 import java.util.*;
 
 public @Data @NoArgsConstructor
-class RareGameCycle extends GameCycle {
+class RareGameRound extends GameRound {
 
 
-    public RareGameCycle(Question question) {
+    public RareGameRound(Question question) {
         this.status = Status.CREATED;
         this.question = question;
     }
@@ -33,8 +33,6 @@ class RareGameCycle extends GameCycle {
         if(this.status != Status.CREATED){
             throw new IllegalGameStateException(status);
         }
-        //FOR TESTING
-        this.question.getOptions().clear();
         players.forEach(player -> {
             question.getOptions().add(player.getName());
         });
@@ -56,7 +54,7 @@ class RareGameCycle extends GameCycle {
         Result result = new Result();
         Map<String,Integer> answerCounts = new HashMap<>();
         if(answers.isEmpty()){
-            throw new NoAnswersException("There isn't any answer in the Cycle to evaluate");
+            throw new NoAnswersException("There isn't any answer in the round to evaluate");
         }
         //Making a map of guesses
         for (Map.Entry<Player, Answer> entry: answers.entrySet()){
