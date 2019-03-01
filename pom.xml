@@ -17,6 +17,15 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <jvmArguments>
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8081
+                    </jvmArguments>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -100,6 +109,8 @@
             <version>1.18.4</version>
             <scope>provided</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+
 
     </dependencies>
 

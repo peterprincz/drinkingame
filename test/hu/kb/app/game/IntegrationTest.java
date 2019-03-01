@@ -7,14 +7,18 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import hu.kb.app.api.*;
 import hu.kb.app.controller.GameController;
 import hu.kb.app.game.quiz.Answer;
+import hu.kb.app.player.Gender;
 import hu.kb.app.player.Player;
 import hu.kb.app.player.drinksetting.DrinkType;
+import hu.kb.app.player.drinksetting.SipType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -32,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+
 public class IntegrationTest {
 
     @Autowired
@@ -48,6 +53,9 @@ public class IntegrationTest {
     @Test
     public void TestAGame() throws Exception {
 
+        MockHttpSession mocksession = new MockHttpSession();
+
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
@@ -60,20 +68,22 @@ public class IntegrationTest {
 
 
         MvcResult createGameResult = mockMvc.perform(post("/create-game")
+                .session(mocksession)
                 .content(CreateGameRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
-                .andExpect(jsonPath("$.gameCycleList[0].question.question", is("QUESTION1")))
-                .andExpect(jsonPath("$.gameCycleList[1].question.question", is("QUESTION2")))
-                .andExpect(jsonPath("$.activeGameCycle.question.question", is("QUESTION1")))
+                .andExpect(jsonPath("$.gameRoundList[0].question.question", is("Ki lopott a Boltbol?")))
+                .andExpect(jsonPath("$.gameRoundList[1].question.question", is("Kit vittek már be a rendörök?")))
+                .andExpect(jsonPath("$.activeGameRound.question.question", is("Ki lopott a Boltbol?")))
                 .andReturn();
 
         RareGame responseRareGame = mapper.readValue(createGameResult.getResponse().getContentAsString(), RareGame.class);
 
-        Player player = new Player("playerOne", 20, DrinkType.WHISKEY);
+        Player player = new Player("playerOne", 20, DrinkType.WHISKEY, SipType.MEDIUM, Gender.MALE);
         String playerJson = ow.writeValueAsString(player);
         MvcResult createPlayerResult = mockMvc.perform(post("/create-player")
+                .session(mocksession)
                 .content(playerJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -90,6 +100,7 @@ public class IntegrationTest {
 
 
         MvcResult joinGameResult = mockMvc.perform(post("/join-game")
+                .session(mocksession)
                 .content(joinGameRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -98,7 +109,7 @@ public class IntegrationTest {
 
         responseRareGame = mapper.readValue(joinGameResult.getResponse().getContentAsString(), RareGame.class);
         assertTrue(responseRareGame.getPlayers().contains(responsePlayer));
-        assertFalse(responseRareGame.getGameCycleList().isEmpty());
+        assertFalse(responseRareGame.getGameRoundList().isEmpty());
 
         StartGameRequest startGameRequest = new StartGameRequest();
         startGameRequest.setGameId(responseRareGame.getId());
@@ -106,24 +117,26 @@ public class IntegrationTest {
         String startGameRequestJson = ow.writeValueAsString( startGameRequest);
 
         MvcResult startGameResult = mockMvc.perform(post("/start-game")
+                .session(mocksession)
                 .content(startGameRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.activeGameCycle.status", is("ONGOING")))
+                .andExpect(jsonPath("$.activeGameRound.status", is("ONGOING")))
                 .andReturn();
 
 
         SendAnswerRequest sendAnswerRequest = new SendAnswerRequest();
-        sendAnswerRequest.setPlayerId(responsePlayer.getId());
         Answer answer = new Answer();
         answer.setGameId(responseRareGame.getId());
         answer.setAnswer("BÉLA");
         sendAnswerRequest.setAnswer(answer);
-        startGameRequest.setGameId(responseRareGame.getId());
+        sendAnswerRequest.setPlayerId(1);
+
 
         String sendAnswerRequestJson = ow.writeValueAsString( sendAnswerRequest);
 
         MvcResult sendAnswerResult = mockMvc.perform(post("/send-answer")
+                .session(mocksession)
                 .content(sendAnswerRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -136,6 +149,7 @@ public class IntegrationTest {
         String endGameRequestJson = ow.writeValueAsString(endGameRequest);
 
         MvcResult endGameResult = mockMvc.perform(post("/end-game")
+                .session(mocksession)
                 .content(endGameRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -147,15 +161,17 @@ public class IntegrationTest {
 
 
         MvcResult startGame2Result = mockMvc.perform(post("/start-game")
+                .session(mocksession)
                 .content(startGameRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.activeGameCycle.status", is("ONGOING")))
+                .andExpect(jsonPath("$.activeGameRound.status", is("ONGOING")))
                 .andReturn();
 
 
 
         MvcResult sendAnswer2Result = mockMvc.perform(post("/send-answer")
+                .session(mocksession)
                 .content(sendAnswerRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -163,6 +179,7 @@ public class IntegrationTest {
 
 
         MvcResult endGame2Result = mockMvc.perform(post("/end-game")
+                .session(mocksession)
                 .content(endGameRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -175,15 +192,17 @@ public class IntegrationTest {
 
 
         MvcResult startGame3Result = mockMvc.perform(post("/start-game")
+                .session(mocksession)
                 .content(startGameRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.activeGameCycle.status", is("ONGOING")))
+                .andExpect(jsonPath("$.activeGameRound.status", is("ONGOING")))
                 .andReturn();
 
 
 
         MvcResult sendAnswer3Result = mockMvc.perform(post("/send-answer")
+                .session(mocksession)
                 .content(sendAnswerRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -191,11 +210,12 @@ public class IntegrationTest {
 
 
         MvcResult endGame3Result = mockMvc.perform(post("/end-game")
+                .session(mocksession)
                 .content(endGameRequestJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result",is("[BÉLA]")))
-                .andExpect(jsonPath("$.lastQuestion", is(true)))
+                .andExpect(jsonPath("$.lastQuestion", is(false)))
                 .andExpect(jsonPath("$.winners", hasSize(1)))
                 .andExpect(jsonPath("$.losers", hasSize(0)))
                 .andReturn();

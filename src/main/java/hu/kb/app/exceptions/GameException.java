@@ -1,4 +1,4 @@
-package hu.kb.app.api.exceptions;
+package hu.kb.app.exceptions;
 
 public class GameException extends Exception {
 
