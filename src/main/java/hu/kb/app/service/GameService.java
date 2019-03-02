@@ -2,6 +2,7 @@ package hu.kb.app.service;
 
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.GameNotFoundException;
+import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.exceptions.PlayerNotFoundException;
 import hu.kb.app.controller.GameController;
 import hu.kb.app.game.RareGameFactory;
@@ -33,9 +34,7 @@ public class GameService {
 
     private Logger logger = LoggerFactory.getLogger(GameController.class);
 
-
     private List<RareGame> rareGameList = new ArrayList<>();
-
 
     public List<RareGame> getGames(){
         return rareGameList;
@@ -88,7 +87,14 @@ public class GameService {
 
     public Result evaluateGameCycle(Integer gameId) throws GameException {
         RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
-        Result result = rareGame.evaluateRound();
+        Result result;
+        try {
+            result = rareGame.evaluateRound();
+        } catch (NoAnswersException e){
+            result = new Result();
+            result.setResult("NO ANSWER WAS GIVEN");
+            return result;
+        }
         logger.info("evaluating the round in game: " + rareGame.getId());
         result.getWinners().forEach(player -> {
                         player.drink();

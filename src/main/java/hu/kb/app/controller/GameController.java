@@ -77,7 +77,7 @@ public class GameController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     //TODO REMOVE NULLCHECKS
-    public ResponseEntity<Player> startGame(@RequestBody CreatePlayerRequest createPlayerRequest){
+    public ResponseEntity<Player> createPlayer(@RequestBody CreatePlayerRequest createPlayerRequest){
         logger.info("Request to create a player with the the following parameters" +createPlayerRequest.toString());
         Player player =  gameService.createPlayer(
                 createPlayerRequest.getName(),

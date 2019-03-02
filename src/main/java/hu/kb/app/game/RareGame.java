@@ -1,6 +1,7 @@
 package hu.kb.app.game;
 
 import hu.kb.app.exceptions.GameException;
+import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.game.gameround.RareGameRound;
 import hu.kb.app.game.quiz.Answer;
 import hu.kb.app.game.quiz.Question;
@@ -49,7 +50,14 @@ class RareGame {
     }
 
     public Result evaluateRound() throws GameException {
-        Result result = activeGameRound.evaluateResults();
+        Result result;
+        try {
+            result = activeGameRound.evaluateResults();
+        //TODO WHAT SHOULD BE THE LOGIC HERE?
+        } catch (NoAnswersException e){
+            setStatus(Status.ENDED);
+            throw e;
+        }
         this.gameRoundList.remove(0);
         if(gameRoundList.size() > 0){
             this.activeGameRound = this.gameRoundList.get(0);
