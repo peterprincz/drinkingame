@@ -62,6 +62,17 @@ public class GameService {
         return playerRepository.save(player);
     }
 
+    public Player getPlayerBy(Integer id) throws PlayerNotFoundException{
+        return playerRepository.findById(id).orElseThrow(()->new PlayerNotFoundException("Player not found"));
+    }
+
+    public List<Player> getPlayers(){
+        Iterable<Player> playerIterator = playerRepository.findAll();
+        List<Player> players = new ArrayList<>();
+        playerIterator.forEach(players::add);
+        return players;
+    }
+
     public RareGame joinGame(Integer playerId,Integer gameId) throws GameException{
         RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
         logger.info("Player:{" + playerId +"} joining game: " + gameId);
