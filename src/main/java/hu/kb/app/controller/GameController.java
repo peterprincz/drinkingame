@@ -8,9 +8,7 @@ import hu.kb.app.exceptions.GameException;
 import hu.kb.app.game.RareGame;
 import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.quiz.Result;
-import hu.kb.app.player.Gender;
 import hu.kb.app.player.Player;
-import hu.kb.app.player.drinksetting.SipType;
 import hu.kb.app.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class GameController {
@@ -76,19 +71,28 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    //TODO REMOVE NULLCHECKS
     public ResponseEntity<Player> createPlayer(@RequestBody CreatePlayerRequest createPlayerRequest){
         logger.info("Request to create a player with the the following parameters" +createPlayerRequest.toString());
         Player player =  gameService.createPlayer(
                 createPlayerRequest.getName(),
                 createPlayerRequest.getWeight(),
                 createPlayerRequest.getDrinkType(),
-                createPlayerRequest.getSipType() == null ? SipType.MEDIUM : createPlayerRequest.getSipType(),
-                createPlayerRequest.getGender()  == null ? Gender.MALE : createPlayerRequest.getGender()
+                createPlayerRequest.getSipType(),
+                createPlayerRequest.getGender()
         );
         return ResponseEntity.ok(player);
     }
 
+    @RequestMapping(
+            path = "edit-player",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Player> editPlayer(@RequestBody EditPlayerRequest editPlayerRequest) throws GameException{
+        logger.info("Request to edit player with the the id of: " + editPlayerRequest.getPlayedId());
+        Player editedPlayer = gameService.editPlayer(editPlayerRequest.getPlayedId(), editPlayerRequest.getDrinkType(), editPlayerRequest.getSipType());
+        return ResponseEntity.ok(editedPlayer);
+    }
 
     @RequestMapping(
             path = "join-game",
