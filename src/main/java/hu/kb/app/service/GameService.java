@@ -115,4 +115,11 @@ public class GameService {
     public RareGame getGameById(Integer id) throws GameNotFoundException {
         return rareGameList.stream().filter(x -> x.getId().equals(id)).findFirst().orElseThrow(() -> new GameNotFoundException(id));
     }
+
+    public Player editPlayer(Integer playedId, DrinkType drinkType, SipType sipType) throws GameException{
+        Player playerToModify = playerRepository.findById(playedId).orElseThrow(() -> new PlayerNotFoundException(playedId));
+        playerToModify.setDrinkType(drinkType);
+        playerToModify.setSipType(sipType);
+        return playerRepository.save(playerToModify);
+    }
 }
