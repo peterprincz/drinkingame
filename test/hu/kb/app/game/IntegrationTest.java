@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import hu.kb.app.api.*;
 import hu.kb.app.controller.GameController;
-import hu.kb.app.game.quiz.Answer;
+import hu.kb.app.game.model.Answer;
 import hu.kb.app.player.Gender;
 import hu.kb.app.player.Player;
 import hu.kb.app.player.drinksetting.DrinkType;

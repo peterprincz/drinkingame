@@ -1,6 +1,6 @@
 package hu.kb.app.api;
 
-import hu.kb.app.game.quiz.Question;
+import hu.kb.app.game.model.Question;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

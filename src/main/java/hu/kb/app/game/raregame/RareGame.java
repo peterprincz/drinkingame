@@ -1,12 +1,12 @@
-package hu.kb.app.game;
+package hu.kb.app.game.raregame;
 
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.NoAnswersException;
-import hu.kb.app.game.gameround.RareGameRound;
-import hu.kb.app.game.quiz.Answer;
-import hu.kb.app.game.quiz.Question;
-import hu.kb.app.game.quiz.Result;
-import hu.kb.app.game.status.Status;
+import hu.kb.app.game.Game;
+import hu.kb.app.game.model.Answer;
+import hu.kb.app.game.model.Question;
+import hu.kb.app.game.model.Result;
+import hu.kb.app.game.Status;
 import hu.kb.app.player.Player;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public @Data @NoArgsConstructor
-class RareGame {
+class RareGame implements Game {
 
     private String name;
 
@@ -33,8 +33,8 @@ class RareGame {
         this.players.add(player);
     }
 
-    public void fillWithQuestions(List<Question> questions){
-        questions.forEach(question-> gameRoundList.add(new RareGameRound(question)));
+    public void addQuestion(Question question){
+        gameRoundList.add(new RareGameRound(question));
     }
 
     public void startGameRound() throws GameException{
@@ -42,6 +42,7 @@ class RareGame {
             setStatus(Status.ONGOING);
             activeGameRound = gameRoundList.get(0);
         }
+        players.forEach(activeGameRound::join);
         activeGameRound.start(this.players);
     }
 

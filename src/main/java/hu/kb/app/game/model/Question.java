@@ -1,9 +1,8 @@
-package hu.kb.app.game.quiz;
+package hu.kb.app.game.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

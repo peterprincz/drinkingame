@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import hu.kb.app.api.*;
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.PlayerNotFoundException;
-import hu.kb.app.game.RareGame;
-import hu.kb.app.game.quiz.Question;
-import hu.kb.app.game.quiz.Result;
+import hu.kb.app.game.raregame.RareGame;
+import hu.kb.app.game.model.Question;
+import hu.kb.app.game.model.Result;
 import hu.kb.app.player.Player;
 import hu.kb.app.service.GameService;
 import org.slf4j.Logger;
@@ -114,7 +114,7 @@ public class GameController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
         public ResponseEntity<RareGame> startGame(@RequestBody StartGameRequest startGameRequest) throws GameException {
         logger.info("request to start the game with the id of" + startGameRequest.getGameId());
-        RareGame rareGame = gameService.startGameCycle(startGameRequest.getGameId());
+        RareGame rareGame = gameService.startGameRound(startGameRequest.getGameId());
         simpMessagingTemplate.convertAndSend("/game/start", rareGame.getActiveGameRound().getQuestion());
         return ResponseEntity.ok(rareGame);
     }
@@ -126,8 +126,8 @@ public class GameController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RareGame> sendAnswerToGame(@RequestBody SendAnswerRequest sendAnswerRequest) throws GameException {
         Integer playerId = sendAnswerRequest.getPlayerId();
-        logger.info("request to send a answer to game "+ sendAnswerRequest.getAnswer().getGameId());
-        return ResponseEntity.ok(gameService.sendAnswerToGame(playerId, sendAnswerRequest.getAnswer()));
+        logger.info("request to send a answer to game "+ sendAnswerRequest.getGameId());
+        return ResponseEntity.ok(gameService.sendAnswerToGame(playerId, sendAnswerRequest.getAnswer(), sendAnswerRequest.getGameId()));
     }
 
     @RequestMapping(
@@ -137,7 +137,7 @@ public class GameController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Result> endGame(@RequestBody EndGameRequest endGameRequest) throws GameException {
         logger.info("request to end a game with the id of "+ endGameRequest.getGameId());
-        Result result = gameService.evaluateGameCycle(endGameRequest.getGameId());
+        Result result = gameService.evaluateGameRound(endGameRequest.getGameId());
         simpMessagingTemplate.convertAndSend("/game/end", result);
         return ResponseEntity.ok(result);
     }

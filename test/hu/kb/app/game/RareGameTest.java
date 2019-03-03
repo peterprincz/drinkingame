@@ -2,9 +2,9 @@ package hu.kb.app.game;
 
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.game.gameround.RareGameRound;
-import hu.kb.app.game.quiz.Answer;
-import hu.kb.app.game.quiz.Question;
-import hu.kb.app.game.quiz.Result;
+import hu.kb.app.game.model.Answer;
+import hu.kb.app.game.model.Question;
+import hu.kb.app.game.model.Result;
 import hu.kb.app.game.status.Status;
 import hu.kb.app.player.Player;
 import hu.kb.app.player.drinksetting.DrinkType;

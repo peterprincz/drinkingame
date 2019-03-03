@@ -5,11 +5,11 @@ import hu.kb.app.exceptions.GameNotFoundException;
 import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.exceptions.PlayerNotFoundException;
 import hu.kb.app.controller.GameController;
-import hu.kb.app.game.RareGameFactory;
-import hu.kb.app.game.quiz.Answer;
-import hu.kb.app.game.RareGame;
-import hu.kb.app.game.quiz.Question;
-import hu.kb.app.game.quiz.Result;
+import hu.kb.app.game.raregame.RareGameFactory;
+import hu.kb.app.game.model.Answer;
+import hu.kb.app.game.raregame.RareGame;
+import hu.kb.app.game.model.Question;
+import hu.kb.app.game.model.Result;
 import hu.kb.app.player.Gender;
 import hu.kb.app.player.Player;
 import hu.kb.app.player.drinksetting.DrinkType;
@@ -81,22 +81,22 @@ public class GameService {
         return rareGame;
     }
 
-    public RareGame startGameCycle(Integer gameId) throws GameException {
+    public RareGame startGameRound(Integer gameId) throws GameException {
         RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() ->  new GameNotFoundException(gameId));
         logger.info("starting a round in game: " + rareGame.getId());
         rareGame.startGameRound();
         return rareGame;
     }
 
-    public RareGame sendAnswerToGame(Integer playerId, Answer answer) throws GameException {
+    public RareGame sendAnswerToGame(Integer playerId, Answer answer, Integer gameId) throws GameException {
         Player player = playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
-        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(answer.getGameId())).findFirst().orElseThrow(() ->  new GameNotFoundException(answer.getGameId()));
-        logger.info("Player:{" + playerId +"} sending answer to game: " + answer.getGameId());
+        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() ->  new GameNotFoundException(gameId));
+        logger.info("Player:{" + playerId +"} sending answer to game: " + gameId);
         rareGame.sendAnswerToGameRound(player, answer);
         return rareGame;
     }
 
-    public Result evaluateGameCycle(Integer gameId) throws GameException {
+    public Result evaluateGameRound(Integer gameId) throws GameException {
         RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
         Result result;
         try {

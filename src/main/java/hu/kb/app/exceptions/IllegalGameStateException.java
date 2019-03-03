@@ -1,6 +1,6 @@
 package hu.kb.app.exceptions;
 
-import hu.kb.app.game.status.Status;
+import hu.kb.app.game.Status;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

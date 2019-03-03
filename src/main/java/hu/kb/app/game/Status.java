@@ -1,4 +1,4 @@
-package hu.kb.app.game.status;
+package hu.kb.app.game;
 
 public enum Status {
     CREATED,ONGOING,ENDED
