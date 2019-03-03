@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import hu.kb.app.api.*;
 import hu.kb.app.exceptions.GameException;
+import hu.kb.app.exceptions.PlayerNotFoundException;
 import hu.kb.app.game.RareGame;
 import hu.kb.app.game.quiz.Question;
 import hu.kb.app.game.quiz.Result;
@@ -154,5 +155,25 @@ public class GameController {
         createGameRequest.setGameName(gameName);
         createGameRequest.setQuestions(questions);
         return ResponseEntity.ok(gameService.createGame(createGameRequest.getGameName(), createGameRequest.getQuestions()));
+    }
+
+    @RequestMapping(
+            path = "get-player",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Player> getPlayer(@RequestBody GetPlayerRequest getPlayerRequest) throws PlayerNotFoundException {
+        logger.info("Request to get one player by id");
+        return ResponseEntity.ok(gameService.getPlayerBy(getPlayerRequest.getPlayerId()));
+    }
+
+    @RequestMapping(
+            path = "get-players",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<List<Player>> getPlayers() {
+        logger.info("Request to get all players");
+        return ResponseEntity.ok(gameService.getPlayers());
     }
 }
