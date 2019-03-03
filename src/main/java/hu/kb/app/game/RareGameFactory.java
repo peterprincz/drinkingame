@@ -26,13 +26,13 @@ public class RareGameFactory {
         rareGame.setName(gameName);
         rareGame.setId(generateAndSetId());
         rareGame.fillWithQuestions(Arrays.asList(
-            new Question("Ki lopott a Boltbol?", new LinkedList<>(Arrays.asList("optionOne", "optionTwo"))),
-            new Question("Kit vittek már be a rendörök?", new LinkedList<>(Arrays.asList("optionOne", "optionTwo"))),
-            new Question("Ki vágta le a saját haját?", new LinkedList<>(Arrays.asList("optionOne", "optionTwo"))),
-            new Question("Ki küldött már mást korházba?", new LinkedList<>(Arrays.asList("optionOne", "optionTwo"))),
-            new Question("Kit büntetett már meg kaller?", new LinkedList<>(Arrays.asList("optionOne", "optionTwo"))),
-            new Question("Ki sírt a suliban rossz jegyért?", new LinkedList<>(Arrays.asList("optionOne", "optionTwo"))),
-            new Question("Ki zárta már ki magát a saját lakásából?", new LinkedList<>(Arrays.asList("optionOne", "optionTwo"))))
+            new Question("Ki lopott a Boltbol?"),
+            new Question("Kit vittek már be a rendörök?"),
+            new Question("Ki vágta le a saját haját?"),
+            new Question("Ki küldött már mást korházba?"),
+            new Question("Kit büntetett már meg kaller?"),
+            new Question("Ki sírt a suliban rossz jegyért?"),
+            new Question("Ki zárta már ki magát a saját lakásából?"))
         );
 
         rareGame.setActiveGameRound(rareGame.getGameRoundList().get(0));

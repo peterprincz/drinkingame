@@ -10,16 +10,17 @@ public class AlcoholCalculatorService {
 
     private static final Double WILDMARK_FEMALE_FACTOR= 0.55;
     private static final Double WILDMARK_MALE_FACTOR = 0.68;
-    private static final Double ETHANOL_DENSITY = 0.789;
 
     public Double calculateBAC(Double totalAlcohol, DrinkType drinkType, Double weight, Gender gender, Integer hourPassed){
-
-        Double alcoholInGramm = totalAlcohol / drinkType.getAlcoholPrecentage() * ETHANOL_DENSITY;
+        Double alcholInOz = totalAlcohol / 28.34;
+        Double weightInLbs = weight * 2.20;
+        Double genderFactor;
         if(Gender.MALE.equals(gender)){
-            return (alcoholInGramm * 5.14/weight * WILDMARK_MALE_FACTOR) - .015 * hourPassed;
+            genderFactor = WILDMARK_MALE_FACTOR;
         } else {
-            return (alcoholInGramm * 5.14/weight * WILDMARK_FEMALE_FACTOR) - .015 * hourPassed;
+            genderFactor = WILDMARK_FEMALE_FACTOR;
         }
+        return (alcholInOz * 5.14 / weightInLbs  * genderFactor) - 0.015 * hourPassed / 60;
     }
 
     public Double calculateBAC(Double totalAlcohol, DrinkType drinkType,  Double weight, Gender gender){

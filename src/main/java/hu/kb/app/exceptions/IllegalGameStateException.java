@@ -11,6 +11,7 @@ public class IllegalGameStateException extends GameException {
     }
 
     public IllegalGameStateException(Status status) {
-        super("ERROR:The game is in " + status.name() + "status");
+        super("ERROR:" +
+                "The game is in " + status.name() + "status");
     }
 }

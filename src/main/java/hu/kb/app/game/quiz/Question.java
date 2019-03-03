@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +19,11 @@ class Question {
     public Question(String question, List<String> options) {
         this.question = question;
         this.options = options;
+    }
+
+    public Question(String question) {
+        this.question = question;
+        this.options = new LinkedList<>();
     }
 
     @Override
