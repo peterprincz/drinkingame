@@ -1,5 +1,6 @@
 package hu.kb.app.game.raregame;
 
+import hu.kb.app.controller.GameController;
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.game.Game;
@@ -10,12 +11,17 @@ import hu.kb.app.game.enums.Status;
 import hu.kb.app.player.Player;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public @Data @NoArgsConstructor
 class RareGame implements Game {
+
+    private Logger logger = LoggerFactory.getLogger(RareGame.class);
+
 
     private String name;
 
@@ -38,6 +44,7 @@ class RareGame implements Game {
     }
 
     public void startGameRound() throws GameException{
+        logger.info("starting Game Round");
         if(activeGameRound == null){
             setStatus(Status.ONGOING);
             activeGameRound = gameRoundList.get(0);

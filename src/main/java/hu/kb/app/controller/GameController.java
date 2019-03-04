@@ -125,9 +125,8 @@ public class GameController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Game> sendAnswerToGame(@RequestBody SendAnswerRequest sendAnswerRequest) throws GameException {
-        Integer playerId = sendAnswerRequest.getPlayerId();
         logger.info("request to send a answer to game "+ sendAnswerRequest.getGameId());
-        return ResponseEntity.ok(gameService.sendAnswerToGame(playerId, sendAnswerRequest.getAnswer(), sendAnswerRequest.getGameId()));
+        return ResponseEntity.ok(gameService.sendAnswerToGame(sendAnswerRequest.getPlayerId(), sendAnswerRequest.getAnswer(), sendAnswerRequest.getGameId()));
     }
 
     @RequestMapping(
