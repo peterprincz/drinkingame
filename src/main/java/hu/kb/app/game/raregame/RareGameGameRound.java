@@ -3,11 +3,11 @@ package hu.kb.app.game.raregame;
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.IllegalGameStateException;
 import hu.kb.app.exceptions.NoAnswersException;
-import hu.kb.app.game.Round;
+import hu.kb.app.game.GameRound;
 import hu.kb.app.game.model.Answer;
 import hu.kb.app.game.model.Question;
 import hu.kb.app.game.model.Result;
-import hu.kb.app.game.Status;
+import hu.kb.app.game.enums.Status;
 import hu.kb.app.player.Player;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 import java.util.*;
 
 public @Data @NoArgsConstructor
-class RareGameRound implements Round {
+class RareGameGameRound implements GameRound {
 
     private List<Player> players = new ArrayList<>();
     private Status status;
@@ -23,7 +23,7 @@ class RareGameRound implements Round {
     private Map<Player, Answer> submittedAnswers = new HashMap<>();
 
 
-    public RareGameRound(Question question) {
+    public RareGameGameRound(Question question) {
         this.status = Status.CREATED;
         this.question = question;
     }

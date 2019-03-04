@@ -5,6 +5,10 @@ import hu.kb.app.exceptions.GameNotFoundException;
 import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.exceptions.PlayerNotFoundException;
 import hu.kb.app.controller.GameController;
+import hu.kb.app.game.Game;
+import hu.kb.app.game.enums.GameType;
+import hu.kb.app.game.hurrygame.HurryGame;
+import hu.kb.app.game.hurrygame.HurryGameFactory;
 import hu.kb.app.game.raregame.RareGameFactory;
 import hu.kb.app.game.model.Answer;
 import hu.kb.app.game.raregame.RareGame;
@@ -34,26 +38,41 @@ public class GameService {
 
     private Logger logger = LoggerFactory.getLogger(GameController.class);
 
-    private List<RareGame> rareGameList = new ArrayList<>();
+    private List<Game> gameList = new ArrayList<>();
 
-    public List<RareGame> getGames(){
-        return rareGameList;
-    }
 
-    public RareGame createGame(String gameName, List<Question> questions){
-        RareGame rareGame;
-        if(questions == null || questions.isEmpty()) {
-            logger.info("Creating game with default questions:" + gameName);
-            rareGame = RareGameFactory.createRareGameWithDefaultQuestions(gameName);
-        } else {
-            logger.info("Creating game with provided questions:" + gameName);
-            rareGame = RareGameFactory.createRareGame(questions, gameName);
+    public Game createGame(String gameName, List<Question> questions, GameType gameType){
+        if(GameType.RAREGAME.equals(gameType)){
+            RareGame rareGame;
+            if(questions == null || questions.isEmpty()) {
+                logger.info("Creating game with default questions:" + gameName);
+                rareGame = RareGameFactory.createRareGameWithDefaultQuestions(gameName);
+            } else {
+                logger.info("Creating game with provided questions:" + gameName);
+                rareGame = RareGameFactory.createRareGame(questions, gameName);
+            }
+            logger.info("Adding game to the gameList");
+            this.gameList.add(rareGame);
+            logger.info("Successfully added game: " + rareGame.getName());
+            logger.info("Number of games: " + gameList.size());
+            return rareGame;
         }
-        logger.info("Adding game to the gameList");
-        this.rareGameList.add(rareGame);
-        logger.info("Successfully added game: " + rareGame.getName());
-        logger.info("Number of games: " + rareGameList.size());
-        return rareGame;
+        if(GameType.HURRYGAME.equals(gameType)){
+            HurryGame hurryGame;
+            if(questions == null || questions.isEmpty()) {
+                logger.info("Creating game with default questions:" + gameName);
+                hurryGame = HurryGameFactory.createRareGameWithDefaultQuestions(gameName);
+            } else {
+                logger.info("Creating game with provided questions:" + gameName);
+                hurryGame =HurryGameFactory.createHurryGame(questions, gameName);
+            }
+            logger.info("Adding game to the gameList");
+            this.gameList.add(hurryGame);
+            logger.info("Successfully added game: " + hurryGame.getName());
+            logger.info("Number of games: " + gameList.size());
+            return hurryGame;
+        }
+        throw new RuntimeException("INVALID GAMETYPE" + gameType);
     }
 
     public Player createPlayer(String name, Double weight, DrinkType drinkType, SipType sipType, Gender gender ){
@@ -73,40 +92,40 @@ public class GameService {
         return players;
     }
 
-    public RareGame joinGame(Integer playerId,Integer gameId) throws GameException{
-        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
+    public Game joinGame(Integer playerId,Integer gameId) throws GameException{
+        Game game = gameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
         logger.info("Player:{" + playerId +"} joining game: " + gameId);
-        rareGame.addPlayer(playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId)));
+        game.addPlayer(playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId)));
         logger.info("Player:{" + playerId +"} successfully joined game: " + gameId);
-        return rareGame;
+        return game;
     }
 
-    public RareGame startGameRound(Integer gameId) throws GameException {
-        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() ->  new GameNotFoundException(gameId));
-        logger.info("starting a round in game: " + rareGame.getId());
-        rareGame.startGameRound();
-        return rareGame;
+    public Game startGameRound(Integer gameId) throws GameException {
+        Game game = gameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() ->  new GameNotFoundException(gameId));
+        logger.info("starting a round in game: " + game.getId());
+        game.startGameRound();
+        return game;
     }
 
-    public RareGame sendAnswerToGame(Integer playerId, Answer answer, Integer gameId) throws GameException {
+    public Game sendAnswerToGame(Integer playerId, Answer answer, Integer gameId) throws GameException {
         Player player = playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
-        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() ->  new GameNotFoundException(gameId));
+        Game game = gameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() ->  new GameNotFoundException(gameId));
         logger.info("Player:{" + playerId +"} sending answer to game: " + gameId);
-        rareGame.sendAnswerToGameRound(player, answer);
-        return rareGame;
+        game.sendAnswerToGameRound(player, answer);
+        return game;
     }
 
     public Result evaluateGameRound(Integer gameId) throws GameException {
-        RareGame rareGame = rareGameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
+        Game game = gameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
         Result result;
         try {
-            result = rareGame.evaluateRound();
+            result = game.evaluateRound();
         } catch (NoAnswersException e){
             result = new Result();
             result.setResult("NO ANSWER WAS GIVEN");
             return result;
         }
-        logger.info("evaluating the round in game: " + rareGame.getId());
+        logger.info("evaluating the round in game: " + game.getId());
         result.getWinners().forEach(player -> {
                         player.drink();
                         player.setAlcoholPercentage(alcoholCalculatorService.calculateBAC(
@@ -117,14 +136,14 @@ public class GameService {
                         playerRepository.save(player);
         });
         if(result.isLastQuestion()){
-            logger.info("no more round left in game: " + rareGame.getId() + " , removing from the list");
-            rareGameList.remove(rareGame);
+            logger.info("no more round left in game: " + game.getId() + " , removing from the list");
+            gameList.remove(game);
         }
         return result;
     }
 
-    public RareGame getGameById(Integer id) throws GameNotFoundException {
-        return rareGameList.stream().filter(x -> x.getId().equals(id)).findFirst().orElseThrow(() -> new GameNotFoundException(id));
+    public Game getGameById(Integer id) throws GameNotFoundException {
+        return gameList.stream().filter(x -> x.getId().equals(id)).findFirst().orElseThrow(() -> new GameNotFoundException(id));
     }
 
     public Player editPlayer(Integer playedId, DrinkType drinkType, SipType sipType) throws GameException{
@@ -133,4 +152,9 @@ public class GameService {
         playerToModify.setSipType(sipType);
         return playerRepository.save(playerToModify);
     }
+
+    public List<Game> getGames(){
+        return gameList;
+    }
+
 }

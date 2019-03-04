@@ -13,28 +13,19 @@ class Question {
 
     private String question;
 
-    private List<String> options = new ArrayList<>();
+    private List<String> options;
 
-    public Question(String question, List<String> options) {
+    private Answer answer;
+
+    public Question(String question, List<String> options, Answer answer) {
         this.question = question;
         this.options = options;
+        this.answer = answer;
     }
 
     public Question(String question) {
         this.question = question;
         this.options = new LinkedList<>();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Question question = (Question) o;
-        return this.question.equals(question.question);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(question);
+        this.answer = new Answer();
     }
 }

@@ -3,8 +3,8 @@ package hu.kb.app.game.hurrygame;
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.IllegalGameStateException;
 import hu.kb.app.exceptions.NoAnswersException;
-import hu.kb.app.game.Round;
-import hu.kb.app.game.Status;
+import hu.kb.app.game.GameRound;
+import hu.kb.app.game.enums.Status;
 import hu.kb.app.game.model.Answer;
 import hu.kb.app.game.model.Question;
 import hu.kb.app.game.model.Result;
@@ -13,13 +13,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public @Data @NoArgsConstructor
-class HurryGameRound implements Round {
+class HurryGameGameRound implements GameRound {
 
     private Answer answer;
     private List<Player> players = new ArrayList<>();
@@ -29,9 +27,9 @@ class HurryGameRound implements Round {
     private LocalDateTime roundStartTime;
     private final static Integer winnerLimit = 3;
 
-    public HurryGameRound(Question question, Answer answer) {
+    public HurryGameGameRound(Question question) {
         this.status = Status.CREATED;
-        this.answer = answer;
+        this.answer = question.getAnswer();
         this.question = question;
     }
 
@@ -77,7 +75,7 @@ class HurryGameRound implements Round {
 
 
         for (int i = 0; i < sortedEntries.size(); i++) {
-            if(i < HurryGameRound.winnerLimit){
+            if(i < HurryGameGameRound.winnerLimit){
                 result.getWinners().add(sortedEntries.get(i).getKey());
             } else {
                 result.getLosers().add(sortedEntries.get(i).getKey());

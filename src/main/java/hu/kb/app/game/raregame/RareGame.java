@@ -6,7 +6,7 @@ import hu.kb.app.game.Game;
 import hu.kb.app.game.model.Answer;
 import hu.kb.app.game.model.Question;
 import hu.kb.app.game.model.Result;
-import hu.kb.app.game.Status;
+import hu.kb.app.game.enums.Status;
 import hu.kb.app.player.Player;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,9 +23,9 @@ class RareGame implements Game {
 
     private List<Player> players  = new ArrayList<>();
 
-    private List<RareGameRound> gameRoundList = new ArrayList<>();
+    private List<RareGameGameRound> gameRoundList = new ArrayList<>();
 
-    private RareGameRound activeGameRound;
+    private RareGameGameRound activeGameRound;
 
     private Status status;
 
@@ -34,7 +34,7 @@ class RareGame implements Game {
     }
 
     public void addQuestion(Question question){
-        gameRoundList.add(new RareGameRound(question));
+        gameRoundList.add(new RareGameGameRound(question));
     }
 
     public void startGameRound() throws GameException{

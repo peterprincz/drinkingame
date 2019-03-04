@@ -3,7 +3,7 @@ package hu.kb.app.game.hurrygame;
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.game.Game;
-import hu.kb.app.game.Status;
+import hu.kb.app.game.enums.Status;
 import hu.kb.app.game.model.Answer;
 import hu.kb.app.game.model.Question;
 import hu.kb.app.game.model.Result;
@@ -23,9 +23,9 @@ class HurryGame implements Game {
 
     private List<Player> players  = new ArrayList<>();
 
-    private List<HurryGameRound> gameRoundList = new ArrayList<>();
+    private List<HurryGameGameRound> gameRoundList = new ArrayList<>();
 
-    private HurryGameRound activeGameRound;
+    private HurryGameGameRound activeGameRound;
 
     private Status status;
 
@@ -33,8 +33,8 @@ class HurryGame implements Game {
         this.players.add(player);
     }
 
-    public void addQuestion(Question question, Answer answer){
-        gameRoundList.add(new HurryGameRound(question, answer));
+    public void addQuestion(Question question){
+        gameRoundList.add(new HurryGameGameRound(question));
     }
 
     public void startGameRound() throws GameException {

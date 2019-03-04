@@ -7,11 +7,15 @@ import hu.kb.app.player.Player;
 
 public interface Game {
 
+    Integer getId();
+
     void addPlayer(Player player);
 
     void startGameRound() throws GameException;
 
     void sendAnswerToGameRound(Player player, Answer answer) throws GameException;
+
+    GameRound getActiveGameRound();
 
     Result evaluateRound() throws GameException;
 

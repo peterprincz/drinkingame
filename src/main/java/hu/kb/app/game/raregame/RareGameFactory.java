@@ -2,7 +2,7 @@ package hu.kb.app.game.raregame;
 
 import hu.kb.app.game.GameIdGenerator;
 import hu.kb.app.game.model.Question;
-import hu.kb.app.game.Status;
+import hu.kb.app.game.enums.Status;
 
 import java.util.Arrays;
 import java.util.List;
