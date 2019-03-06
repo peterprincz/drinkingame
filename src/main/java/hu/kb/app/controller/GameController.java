@@ -62,7 +62,6 @@ public class GameController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Game> createGame(@RequestBody CreateGameRequest createGameRequest){
-
         logger.info("Request to create a game with the name" + createGameRequest.getGameName());
         return ResponseEntity.ok(gameService.createGame(createGameRequest.getGameName(), createGameRequest.getQuestions(), createGameRequest.getGameType()));
     }
@@ -136,6 +135,7 @@ public class GameController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Result> endGame(@RequestBody EndGameRequest endGameRequest) throws GameException {
         logger.info("request to end a game with the id of "+ endGameRequest.getGameId());
+        System.out.println(endGameRequest);
         Result result = gameService.evaluateGameRound(endGameRequest.getGameId());
         simpMessagingTemplate.convertAndSend("/game/end", result);
         return ResponseEntity.ok(result);

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 import java.util.*;
 
 public @Data @NoArgsConstructor
-class RareGameGameRound implements GameRound {
+class RareGameRound implements GameRound {
 
     private List<Player> players = new ArrayList<>();
     private Status status;
@@ -23,7 +23,7 @@ class RareGameGameRound implements GameRound {
     private Map<Player, Answer> submittedAnswers = new HashMap<>();
 
 
-    public RareGameGameRound(Question question) {
+    public RareGameRound(Question question) {
         this.status = Status.CREATED;
         this.question = question;
     }
