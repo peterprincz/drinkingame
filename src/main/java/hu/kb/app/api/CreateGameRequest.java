@@ -1,6 +1,7 @@
 package hu.kb.app.api;
 
-import hu.kb.app.game.quiz.Question;
+import hu.kb.app.game.enums.GameType;
+import hu.kb.app.game.model.Question;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,4 +14,6 @@ class CreateGameRequest {
     private String gameName;
 
     private List<Question> questions;
+
+    private GameType gameType;
 }

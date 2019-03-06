@@ -4,9 +4,12 @@ package hu.kb.app.game;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import hu.kb.app.api.*;
 import hu.kb.app.controller.GameController;
-import hu.kb.app.game.quiz.Answer;
+import hu.kb.app.game.enums.GameType;
+import hu.kb.app.game.model.Answer;
+import hu.kb.app.game.raregame.RareGame;
 import hu.kb.app.player.Gender;
 import hu.kb.app.player.Player;
 import hu.kb.app.player.drinksetting.DrinkType;
@@ -51,7 +54,7 @@ public class IntegrationTest {
 
 
     @Test
-    public void TestAGame() throws Exception {
+    public void TestARareGame() throws Exception {
 
         MockHttpSession mocksession = new MockHttpSession();
 
@@ -63,6 +66,7 @@ public class IntegrationTest {
         String gameName = "gameOne";
         CreateGameRequest createGameRequest = new CreateGameRequest();
         createGameRequest.setGameName(gameName);
+        createGameRequest.setGameType(GameType.RAREGAME);
 
         String CreateGameRequestJson=ow.writeValueAsString(createGameRequest);
 
@@ -77,6 +81,10 @@ public class IntegrationTest {
                 .andExpect(jsonPath("$.gameRoundList[1].question.question", is("Kit vittek már be a rendörök?")))
                 .andExpect(jsonPath("$.activeGameRound.question.question", is("Ki lopott a Boltbol?")))
                 .andReturn();
+
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addKeyDeserializer(Player.class, new ClassKeyDeserializer());
+        mapper.registerModule(simpleModule);
 
         RareGame responseRareGame = mapper.readValue(createGameResult.getResponse().getContentAsString(), RareGame.class);
 
@@ -127,7 +135,7 @@ public class IntegrationTest {
 
         SendAnswerRequest sendAnswerRequest = new SendAnswerRequest();
         Answer answer = new Answer();
-        answer.setGameId(responseRareGame.getId());
+        sendAnswerRequest.setGameId(responseRareGame.getId());
         answer.setAnswer("BÉLA");
         sendAnswerRequest.setAnswer(answer);
         sendAnswerRequest.setPlayerId(1);

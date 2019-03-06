@@ -1,24 +1,24 @@
 package hu.kb.app.game;
 
 import hu.kb.app.exceptions.GameException;
-import hu.kb.app.game.gameround.RareGameRound;
-import hu.kb.app.game.quiz.Answer;
-import hu.kb.app.game.quiz.Question;
-import hu.kb.app.game.quiz.Result;
-import hu.kb.app.game.status.Status;
+import hu.kb.app.game.enums.Status;
+import hu.kb.app.game.model.Answer;
+import hu.kb.app.game.model.Question;
+import hu.kb.app.game.model.Result;
+import hu.kb.app.game.raregame.RareGame;
+import hu.kb.app.game.raregame.RareGameFactory;
+import hu.kb.app.game.raregame.RareGameRound;
 import hu.kb.app.player.Player;
 import hu.kb.app.player.drinksetting.DrinkType;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RareGameTest {
 
-    private RareGame rareGame;
+    private Game rareGame;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
@@ -32,41 +32,42 @@ class RareGameTest {
 
     @org.junit.jupiter.api.Test
     void fillWithQuestions() {
-        Question questionOne = new Question("What is that?", Arrays.asList("option","option1","option2"));
-        Question questionTwo = new Question("What is this", Arrays.asList("option","option1","option2"));
-        rareGame.fillWithQuestions(Arrays.asList(questionOne, questionTwo));
-        RareGameRound rareGameCycleOne = rareGame.getGameRoundList().get(0);
-        RareGameRound rareGameCycleTwo = rareGame.getGameRoundList().get(1);
-        assertEquals(questionOne,rareGameCycleOne.getQuestion());
-        assertEquals(questionTwo,rareGameCycleTwo.getQuestion());
+        Question questionOne = new Question("What is that?");
+        Question questionTwo = new Question("What is this");
+        ((RareGame) rareGame).addQuestion(questionOne);
+        ((RareGame) rareGame).addQuestion(questionTwo);
+        GameRound rareGameRoundOne = ((RareGame) rareGame).getGameRoundList().get(0);
+        GameRound rareGameRoundTwo = ((RareGame) rareGame).getGameRoundList().get(1);
+        assertEquals(questionOne,(rareGameRoundOne).getQuestion());
+        assertEquals(questionTwo,(rareGameRoundTwo).getQuestion());
     }
 
     @org.junit.jupiter.api.Test
     void startGameCycle() throws GameException {
-        Question question = new Question("What is that?", Arrays.asList("option","option1","option2"));
+        Question question = new Question("What is that?");
         this.fillWithQuestions();
-        rareGame.fillWithQuestions(Collections.singletonList(question));
+        ((RareGame) rareGame).addQuestion(question);
         rareGame.startGameRound();
         assertEquals(Status.ONGOING,rareGame.getActiveGameRound().getStatus());
     }
 
     @org.junit.jupiter.api.Test
     void sendAnswerToGameCycle() throws GameException {
-        Question question = new Question("What is that?", Arrays.asList("option","option1","option2"));
+        Question question = new Question("What is that?");
         this.fillWithQuestions();
-        rareGame.fillWithQuestions(Collections.singletonList(question));
+        ((RareGame) rareGame).addQuestion(question);
         rareGame.startGameRound();
-        RareGameRound rareGameCycle = rareGame.getActiveGameRound();
-        Answer answer = new Answer(1,"answer");
+        RareGameRound rareGameRound = (RareGameRound) rareGame.getActiveGameRound();
+        Answer answer = new Answer("answer");
         Player player = new Player("karcsi",80, DrinkType.BEER);
         rareGame.sendAnswerToGameRound(player,answer);
-        assertTrue(rareGameCycle.getAnswers().containsKey(player));
+        assertTrue(rareGameRound.getSubmittedAnswers().containsKey(player));
     }
 
     @Test
     void testNotOngoingGameAnswer(){
         Player player = new Player("karcsi",80, DrinkType.BEER);
-        Answer answer = new Answer(1,"answer");
+        Answer answer = new Answer("answer");
         assertThrows(IllegalStateException.class,()->rareGame.sendAnswerToGameRound(player,answer));
     }
 
@@ -75,8 +76,8 @@ class RareGameTest {
         Player player1 = new Player("karcsi",80, DrinkType.BEER);
         Player player2 = new Player("pista",80, DrinkType.BEER);
         Player player3 = new Player("béla",80, DrinkType.BEER);
-        Answer answer = new Answer(0,"josko");
-        rareGame = RareGameFactory.createRareGame((Collections.singletonList(new Question("question", new LinkedList<>(Arrays.asList("option", "option1"))))), "gameOne");
+        Answer answer = new Answer("josko");
+        rareGame = RareGameFactory.createRareGame((Collections.singletonList(new Question("question"))), "gameOne");
         rareGame.addPlayer(player1);
         rareGame.addPlayer(player2);
         rareGame.addPlayer(player3);
@@ -93,6 +94,6 @@ class RareGameTest {
     void addPlayer() {
         Player player1 = new Player("karcsi",80, DrinkType.BEER);
         rareGame.addPlayer(player1);
-        assertTrue(rareGame.getPlayers().contains(player1));
+        assertTrue(((RareGame) rareGame).getPlayers().contains(player1));
     }
 }

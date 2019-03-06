@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import hu.kb.app.api.*;
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.PlayerNotFoundException;
-import hu.kb.app.game.RareGame;
-import hu.kb.app.game.quiz.Question;
-import hu.kb.app.game.quiz.Result;
+import hu.kb.app.game.Game;
+import hu.kb.app.game.model.Question;
+import hu.kb.app.game.model.Result;
 import hu.kb.app.player.Player;
 import hu.kb.app.service.GameService;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class GameController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    public ResponseEntity<List<RareGame>> getGames() throws GameException {
+    public ResponseEntity<List<Game>> getGames() throws GameException {
         logger.info("Request to get all games");
         return ResponseEntity.ok(gameService.getGames());
     }
@@ -51,7 +51,7 @@ public class GameController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    public ResponseEntity<RareGame> getGame(@PathVariable Integer id) throws GameException {
+    public ResponseEntity<Game> getGame(@PathVariable Integer id) throws GameException {
         logger.info("Request to get game with id of " + id);
         return ResponseEntity.ok(gameService.getGameById(id));
     }
@@ -61,10 +61,9 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RareGame> createGame(@RequestBody CreateGameRequest createGameRequest){
-
+    public ResponseEntity<Game> createGame(@RequestBody CreateGameRequest createGameRequest){
         logger.info("Request to create a game with the name" + createGameRequest.getGameName());
-        return ResponseEntity.ok(gameService.createGame(createGameRequest.getGameName(), createGameRequest.getQuestions()));
+        return ResponseEntity.ok(gameService.createGame(createGameRequest.getGameName(), createGameRequest.getQuestions(), createGameRequest.getGameType()));
     }
 
     @RequestMapping(
@@ -100,11 +99,11 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RareGame> joinGame(@RequestBody JoinGameRequest joinGameRequest) throws GameException{
+    public ResponseEntity<Game> joinGame(@RequestBody JoinGameRequest joinGameRequest) throws GameException{
         logger.info("Request to join the the game " + joinGameRequest.getGameId() + " with the player" + joinGameRequest.getPlayerId());
-        RareGame rareGame = gameService.joinGame(joinGameRequest.getPlayerId(), joinGameRequest.getGameId());
+        Game game = gameService.joinGame(joinGameRequest.getPlayerId(), joinGameRequest.getGameId());
         simpMessagingTemplate.convertAndSend("/game/join/" + joinGameRequest.getGameId(),"connected to the game");
-        return ResponseEntity.ok(rareGame);
+        return ResponseEntity.ok(game);
     }
 
     @RequestMapping(
@@ -112,11 +111,11 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-        public ResponseEntity<RareGame> startGame(@RequestBody StartGameRequest startGameRequest) throws GameException {
+        public ResponseEntity<Game> startGame(@RequestBody StartGameRequest startGameRequest) throws GameException {
         logger.info("request to start the game with the id of" + startGameRequest.getGameId());
-        RareGame rareGame = gameService.startGameCycle(startGameRequest.getGameId());
-        simpMessagingTemplate.convertAndSend("/game/start", rareGame.getActiveGameRound().getQuestion());
-        return ResponseEntity.ok(rareGame);
+        Game game = gameService.startGameRound(startGameRequest.getGameId());
+        simpMessagingTemplate.convertAndSend("/game/start", game.getActiveGameRound().getQuestion());
+        return ResponseEntity.ok(game);
     }
 
     @RequestMapping(
@@ -124,10 +123,9 @@ public class GameController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RareGame> sendAnswerToGame(@RequestBody SendAnswerRequest sendAnswerRequest) throws GameException {
-        Integer playerId = sendAnswerRequest.getPlayerId();
-        logger.info("request to send a answer to game "+ sendAnswerRequest.getAnswer().getGameId());
-        return ResponseEntity.ok(gameService.sendAnswerToGame(playerId, sendAnswerRequest.getAnswer()));
+    public ResponseEntity<Game> sendAnswerToGame(@RequestBody SendAnswerRequest sendAnswerRequest) throws GameException {
+        logger.info("request to send a answer to game "+ sendAnswerRequest.getGameId());
+        return ResponseEntity.ok(gameService.sendAnswerToGame(sendAnswerRequest.getPlayerId(), sendAnswerRequest.getAnswer(), sendAnswerRequest.getGameId()));
     }
 
     @RequestMapping(
@@ -137,7 +135,8 @@ public class GameController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Result> endGame(@RequestBody EndGameRequest endGameRequest) throws GameException {
         logger.info("request to end a game with the id of "+ endGameRequest.getGameId());
-        Result result = gameService.evaluateGameCycle(endGameRequest.getGameId());
+        System.out.println(endGameRequest);
+        Result result = gameService.evaluateGameRound(endGameRequest.getGameId());
         simpMessagingTemplate.convertAndSend("/game/end", result);
         return ResponseEntity.ok(result);
     }
@@ -146,7 +145,7 @@ public class GameController {
     @RequestMapping(
             path = "create-game-file",
             method = RequestMethod.POST)
-    public ResponseEntity<RareGame> createGame(@RequestParam("gameName") String gameName, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<Game> createGame(@RequestParam("gameName") String gameName, @RequestParam("file") MultipartFile file) throws IOException {
         logger.info("Request to create a game with the name" + gameName);
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -154,7 +153,7 @@ public class GameController {
         CreateGameRequest createGameRequest = new CreateGameRequest();
         createGameRequest.setGameName(gameName);
         createGameRequest.setQuestions(questions);
-        return ResponseEntity.ok(gameService.createGame(createGameRequest.getGameName(), createGameRequest.getQuestions()));
+        return ResponseEntity.ok(gameService.createGame(createGameRequest.getGameName(), createGameRequest.getQuestions(), createGameRequest.getGameType()));
     }
 
     @RequestMapping(

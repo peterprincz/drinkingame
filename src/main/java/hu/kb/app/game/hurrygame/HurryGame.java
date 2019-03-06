@@ -1,12 +1,12 @@
-package hu.kb.app.game;
+package hu.kb.app.game.hurrygame;
 
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.NoAnswersException;
-import hu.kb.app.game.gameround.RareGameRound;
-import hu.kb.app.game.quiz.Answer;
-import hu.kb.app.game.quiz.Question;
-import hu.kb.app.game.quiz.Result;
-import hu.kb.app.game.status.Status;
+import hu.kb.app.game.Game;
+import hu.kb.app.game.enums.Status;
+import hu.kb.app.game.model.Answer;
+import hu.kb.app.game.model.Question;
+import hu.kb.app.game.model.Result;
 import hu.kb.app.player.Player;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public @Data @NoArgsConstructor
-class RareGame {
+class HurryGame implements Game {
 
     private String name;
 
@@ -23,9 +23,9 @@ class RareGame {
 
     private List<Player> players  = new ArrayList<>();
 
-    private List<RareGameRound> gameRoundList = new ArrayList<>();
+    private List<HurryGameGameRound> gameRoundList = new ArrayList<>();
 
-    private RareGameRound activeGameRound;
+    private HurryGameGameRound activeGameRound;
 
     private Status status;
 
@@ -33,15 +33,16 @@ class RareGame {
         this.players.add(player);
     }
 
-    public void fillWithQuestions(List<Question> questions){
-        questions.forEach(question-> gameRoundList.add(new RareGameRound(question)));
+    public void addQuestion(Question question){
+        gameRoundList.add(new HurryGameGameRound(question));
     }
 
-    public void startGameRound() throws GameException{
+    public void startGameRound() throws GameException {
         if(activeGameRound == null){
             setStatus(Status.ONGOING);
             activeGameRound = gameRoundList.get(0);
         }
+        players.forEach(activeGameRound::join);
         activeGameRound.start(this.players);
     }
 

@@ -1,4 +1,4 @@
-package hu.kb.app.game.quiz;
+package hu.kb.app.game.model;
 
 import hu.kb.app.player.Player;
 import lombok.Data;
