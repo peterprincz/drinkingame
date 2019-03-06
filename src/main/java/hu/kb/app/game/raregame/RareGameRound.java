@@ -56,10 +56,11 @@ class RareGameGameRound implements GameRound {
     }
 
     @Override
-    public Result evaluateResults() throws GameException {
+    public Result evaluateResults() throws NoAnswersException {
         Result result = new Result();
         Map<String,Integer> answerCounts = new HashMap<>();
         if(submittedAnswers.isEmpty()){
+            this.status = Status.ENDED;
             throw new NoAnswersException("There isn't any answer in the round to evaluate");
         }
         //Making a map of guesses
