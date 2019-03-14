@@ -19,6 +19,7 @@ import hu.kb.app.player.Player;
 import hu.kb.app.player.drinksetting.DrinkType;
 import hu.kb.app.player.drinksetting.SipType;
 import hu.kb.app.repository.PlayerRepository;
+import hu.kb.app.repository.QuestionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class GameService {
     @Autowired
     private
     PlayerRepository playerRepository;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @Autowired
     private AlcoholCalculatorService alcoholCalculatorService;
@@ -60,11 +64,13 @@ public class GameService {
         if(GameType.HURRYGAME.equals(gameType)){
             HurryGame hurryGame;
             if(questions == null || questions.isEmpty()) {
-                logger.info("Creating game with default questions:" + gameName);
-                hurryGame = HurryGameFactory.createRareGameWithDefaultQuestions(gameName);
+                logger.info("Creating game from database questions" + gameName);
+                List<Question> questionList = questionRepository.findAll();
+                Collections.shuffle(questionList);
+                hurryGame = HurryGameFactory.createHurryGame(questionList.subList(0, 5), gameName);
             } else {
                 logger.info("Creating game with provided questions:" + gameName);
-                hurryGame =HurryGameFactory.createHurryGame(questions, gameName);
+                hurryGame = HurryGameFactory.createHurryGame(questions, gameName);
             }
             logger.info("Adding game to the gameList");
             this.gameList.add(hurryGame);
@@ -73,6 +79,10 @@ public class GameService {
             return hurryGame;
         }
         throw new RuntimeException("INVALID GAMETYPE" + gameType);
+    }
+
+    public Game createGame(String gameName, GameType gameType){
+        return createGame(gameName, new LinkedList<>(), gameType);
     }
 
     public Player createPlayer(String name, Double weight, DrinkType drinkType, SipType sipType, Gender gender ){
