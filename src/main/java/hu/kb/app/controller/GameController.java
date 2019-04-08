@@ -115,9 +115,10 @@ public class GameController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
         public ResponseEntity<Game> startGame(@RequestBody StartGameRequest startGameRequest) throws GameException {
-        logger.info("request to start the game with the id of" + startGameRequest.getGameId());
-        Game game = gameService.startGameRound(startGameRequest.getGameId());
-        simpMessagingTemplate.convertAndSend("/game/start", game.getActiveGameRound().getQuestion());
+        Integer gameId = startGameRequest.getGameId();
+        logger.info("request to start the game with the id of" + gameId);
+        Game game = gameService.startGameRound(gameId);
+        simpMessagingTemplate.convertAndSend("/game/start/" + gameId, game.getActiveGameRound().getQuestion());
         return ResponseEntity.ok(game);
     }
 
@@ -137,10 +138,10 @@ public class GameController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Result> endGame(@RequestBody EndGameRequest endGameRequest) throws GameException {
-        logger.info("request to end a game with the id of "+ endGameRequest.getGameId());
-        System.out.println(endGameRequest);
-        Result result = gameService.evaluateGameRound(endGameRequest.getGameId());
-        simpMessagingTemplate.convertAndSend("/game/end", result);
+        Integer gameId = endGameRequest.getGameId();
+        logger.info("request to end a game with the id of "+ gameId);
+        Result result = gameService.evaluateGameRound(gameId);
+        simpMessagingTemplate.convertAndSend("/game/end/" + gameId, result);
         return ResponseEntity.ok(result);
     }
 
