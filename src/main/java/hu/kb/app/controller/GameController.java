@@ -7,6 +7,7 @@ import hu.kb.app.api.*;
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.PlayerNotFoundException;
 import hu.kb.app.game.Game;
+import hu.kb.app.game.enums.GameType;
 import hu.kb.app.game.model.Question;
 import hu.kb.app.game.model.Result;
 import hu.kb.app.player.Player;
@@ -63,7 +64,9 @@ public class GameController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Game> createGame(@RequestBody CreateGameRequest createGameRequest){
         logger.info("Request to create a game with the name" + createGameRequest.getGameName());
-        return ResponseEntity.ok(gameService.createGame(createGameRequest.getGameName(), createGameRequest.getQuestions(), createGameRequest.getGameType()));
+        Game game = gameService.createGame(createGameRequest.getGameName(), createGameRequest.getQuestions(), createGameRequest.getGameType());
+        simpMessagingTemplate.convertAndSend("/game/created",game);
+        return ResponseEntity.ok(game);
     }
 
     @RequestMapping(
@@ -153,6 +156,7 @@ public class GameController {
         CreateGameRequest createGameRequest = new CreateGameRequest();
         createGameRequest.setGameName(gameName);
         createGameRequest.setQuestions(questions);
+        createGameRequest.setGameType(GameType.HURRYGAME);
         return ResponseEntity.ok(gameService.createGame(createGameRequest.getGameName(), createGameRequest.getQuestions(), createGameRequest.getGameType()));
     }
 

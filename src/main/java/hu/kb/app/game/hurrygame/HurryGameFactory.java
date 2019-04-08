@@ -25,34 +25,26 @@ public class HurryGameFactory {
         hurryGame.setName(gameName);
         hurryGame.setId(generateAndSetId());
         List<Question> questionList = new LinkedList<>();
-            questionList.add(new Question("Ki lopott a Boltbol?",
-                    Arrays.asList("optionOne", "optionTwo"),
-                    new Answer("answer"))
+            questionList.add(new Question("What was our biggest difficulity?",
+                    Arrays.asList("Lack of motivation","Lack of knowledge","Coming up with a good idea","Not enough food"),
+                    new Answer("Coming up with a good idea"))
             );
-            questionList.add(new Question("Kit vittek már be a rendörök?",
-                    Arrays.asList("optionOne", "optionTwo"),
-                    new Answer("answer"))
-            );
-            questionList.add(new Question("Ki vágta le a saját haját?",
-                    Arrays.asList("optionOne", "optionTwo"),
-                    new Answer("answer"))
-            );
-            questionList.add(new Question("Ki küldött már mást korházba?",
-                    Arrays.asList("optionOne", "optionTwo"),
-                    new Answer("answer"))
-            );
-            questionList.add(new Question("Kit büntetett már meg kaller?",
-                    Arrays.asList("optionOne", "optionTwo"),
-                    new Answer("answer"))
-            );
-            questionList.add(new Question("Ki sírt a suliban rossz jegyért?",
-                    Arrays.asList("optionOne", "optionTwo"),
-                    new Answer("answer"))
-            );
-            questionList.add(new Question("Ki zárta már ki magát a saját lakásából?",
-                    Arrays.asList("optionOne", "optionTwo"),
-                    new Answer("answer"))
-            );
+        questionList.add(new Question("Who is the other member of the team?",
+                Arrays.asList("János Márton","Kurt Cobain","Péter Princz","Dániel Szendrei"),
+                new Answer("Péter Princz"))
+        );
+        questionList.add(new Question("Which wifi you need to be connected to?",
+                Arrays.asList("codecool-guest", "codecool-event","codecool-student","wifi from the neighbour"),
+                new Answer("codecool-event"))
+        );
+        questionList.add(new Question("When should you drink?",
+                Arrays.asList("If you answer the question wrong", "If you answer the question correctly","If you don't give any answer","If you go for a coffee break"),
+                new Answer("If you answer the question correctly"))
+        );
+
+
+        questionList.forEach(hurryGame::addQuestion);
+
         hurryGame.setActiveGameRound(hurryGame.getGameRoundList().get(0));
         hurryGame.setStatus(Status.CREATED);
         return hurryGame;

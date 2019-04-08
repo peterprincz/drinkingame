@@ -45,9 +45,6 @@ class HurryGameGameRound implements GameRound {
         if(this.status != Status.CREATED){
             throw new IllegalGameStateException(status);
         }
-        players.forEach(player -> {
-            question.getOptions().add(player.getName());
-        });
         this.status = Status.ONGOING;
         return this.question;
     }
@@ -73,12 +70,14 @@ class HurryGameGameRound implements GameRound {
                 .sorted(Map.Entry.comparingByValue((Comparator.comparing(HurryGameAnswer::getSubmitTime))))
                 .collect(Collectors.toList());
 
+        int counter = 0;
 
-        for (int i = 0; i < sortedEntries.size(); i++) {
-            if(i < HurryGameGameRound.winnerLimit){
-                result.getWinners().add(sortedEntries.get(i).getKey());
+        for (Map.Entry<Player, HurryGameAnswer> sortedEntry : sortedEntries) {
+            if (sortedEntry.getValue().getAnswer().equals(result.getResult()) && counter < winnerLimit) {
+                counter++;
+                result.getWinners().add(sortedEntry.getKey());
             } else {
-                result.getLosers().add(sortedEntries.get(i).getKey());
+                result.getLosers().add(sortedEntry.getKey());
             }
         }
         return result;
