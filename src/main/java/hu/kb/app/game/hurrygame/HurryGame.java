@@ -51,21 +51,24 @@ class HurryGame implements Game {
     }
 
     public Result evaluateRound() throws GameException {
-        Result result;
+        Result result = null;
         try {
             result = activeGameRound.evaluateResults();
         //TODO WHAT SHOULD BE THE LOGIC HERE?
         } catch (NoAnswersException e){
             setStatus(Status.ENDED);
             throw e;
+        } finally {
+            this.gameRoundList.remove(0);
+            if(gameRoundList.size() > 0){
+                this.activeGameRound = this.gameRoundList.get(0);
+            } else {
+                setStatus(Status.ENDED);
+                assert result != null;
+                result.setLastQuestion(true);
+            }
         }
-        this.gameRoundList.remove(0);
-        if(gameRoundList.size() > 0){
-            this.activeGameRound = this.gameRoundList.get(0);
-        } else {
-            setStatus(Status.ENDED);
-            result.setLastQuestion(true);
-        }
+
         return result;
     }
 
