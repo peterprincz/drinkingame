@@ -119,11 +119,10 @@ public class GameController {
         return gameService.createGame(createGameRequest.getGameName(), createGameRequest.getQuestions(), createGameRequest.getGameType());
     }
 
-
-    @PostMapping("/get-player")
-    public Player getPlayer(@RequestBody GetPlayerRequest getPlayerRequest) throws PlayerNotFoundException {
-        logger.info("Request to get one player by id");
-        return gameService.getPlayerBy(getPlayerRequest.getPlayerId());
+    @GetMapping("/get-player/{id}")
+    public Player getPlayer(@PathVariable Integer id) throws PlayerNotFoundException {
+        logger.info("Request to get one player by id: " + id);
+        return gameService.getPlayerBy(id);
     }
 
     @GetMapping("/get-players")
