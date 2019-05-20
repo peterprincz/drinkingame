@@ -55,7 +55,7 @@ class HurryGameGameRound implements GameRound {
        if(status != Status.ONGOING){
            throw new IllegalGameStateException(status);
        }
-        submittedAnswers.put(player, new HurryGameAnswer(answer));
+        submittedAnswers.put(player, new HurryGameAnswer(answer.getAnswer()));
     }
 
     @Override

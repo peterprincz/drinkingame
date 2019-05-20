@@ -13,4 +13,8 @@ public enum DrinkType {
         return alcoholPrecentage;
     }
 
+    public DrinkType getRandom(){
+        return DrinkType.values()[(int)(Math.random() * DrinkType.values().length)];
+    }
+
 }

@@ -4,6 +4,7 @@ import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.game.Game;
 import hu.kb.app.game.model.Answer;
+import hu.kb.app.game.model.BaseGame;
 import hu.kb.app.game.model.Question;
 import hu.kb.app.game.model.Result;
 import hu.kb.app.game.enums.Status;
@@ -15,23 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public @Data @NoArgsConstructor
-class RareGame implements Game {
-
-    private String name;
-
-    private Integer id;
-
-    private List<Player> players  = new ArrayList<>();
+class RareGame extends BaseGame implements Game {
 
     private List<RareGameRound> gameRoundList = new ArrayList<>();
 
     private RareGameRound activeGameRound;
-
-    private Status status;
-
-    public void addPlayer(Player player){
-        this.players.add(player);
-    }
 
     public void addQuestion(Question question){
         gameRoundList.add(new RareGameRound(question));

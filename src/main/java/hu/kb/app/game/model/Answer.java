@@ -5,9 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-public @Data @NoArgsConstructor @AllArgsConstructor
-class Answer {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Answer {
 
     private String answer;
 

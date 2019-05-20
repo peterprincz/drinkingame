@@ -5,6 +5,7 @@ import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.game.Game;
 import hu.kb.app.game.enums.Status;
 import hu.kb.app.game.model.Answer;
+import hu.kb.app.game.model.BaseGame;
 import hu.kb.app.game.model.Question;
 import hu.kb.app.game.model.Result;
 import hu.kb.app.player.Player;
@@ -15,39 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public @Data @NoArgsConstructor
-class HurryGame implements Game {
-
-    private String name;
-
-    private Integer id;
-
-    private List<Player> players  = new ArrayList<>();
+class HurryGame extends BaseGame implements Game {
 
     private List<HurryGameGameRound> gameRoundList = new ArrayList<>();
 
-    private HurryGameGameRound activeGameRound;
+    protected HurryGameGameRound activeGameRound;
 
-    private Status status;
 
-    public void addPlayer(Player player){
-        this.players.add(player);
-    }
 
     public void addQuestion(Question question){
         gameRoundList.add(new HurryGameGameRound(question));
-    }
-
-    public void startGameRound() throws GameException {
-        if(activeGameRound == null){
-            setStatus(Status.ONGOING);
-            activeGameRound = gameRoundList.get(0);
-        }
-        players.forEach(activeGameRound::join);
-        activeGameRound.start(this.players);
-    }
-
-    public void sendAnswerToGameRound(Player player, Answer answer) throws GameException{
-        activeGameRound.handleAnswer(player, answer);
     }
 
     public Result evaluateRound() throws GameException {
@@ -70,6 +48,19 @@ class HurryGame implements Game {
         }
 
         return result;
+    }
+
+    public void startGameRound() throws GameException {
+        if(activeGameRound == null){
+            setStatus(Status.ONGOING);
+            activeGameRound = gameRoundList.get(0);
+        }
+        players.forEach(activeGameRound::join);
+        activeGameRound.start(this.players);
+    }
+
+    public void sendAnswerToGameRound(Player player, Answer answer) throws GameException{
+        activeGameRound.handleAnswer(player, answer);
     }
 
 }

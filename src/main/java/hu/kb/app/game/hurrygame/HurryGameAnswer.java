@@ -2,19 +2,19 @@ package hu.kb.app.game.hurrygame;
 
 import hu.kb.app.game.model.Answer;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-public @Data @NoArgsConstructor
-class HurryGameAnswer {
-
-    String answer;
+@EqualsAndHashCode(callSuper = true)
+@Data
+@NoArgsConstructor
+public class HurryGameAnswer extends Answer {
     LocalDateTime submitTime;
 
-    public HurryGameAnswer(Answer answer){
-        this.answer = answer.getAnswer();
+    public HurryGameAnswer(String answer) {
+        super(answer);
         this.submitTime = LocalDateTime.now();
     }
-
 }
