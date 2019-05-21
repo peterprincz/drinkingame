@@ -6,6 +6,7 @@ import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.game.GameRound;
 import hu.kb.app.game.enums.Status;
 import hu.kb.app.game.model.Answer;
+import hu.kb.app.game.model.BaseGameRound;
 import hu.kb.app.game.model.Question;
 import hu.kb.app.game.model.Result;
 import hu.kb.app.player.Player;
@@ -17,43 +18,27 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public @Data @NoArgsConstructor
-class HurryGameGameRound implements GameRound {
+class HurryGameGameRound extends BaseGameRound implements GameRound {
 
-    private Answer answer;
-    private List<Player> players = new ArrayList<>();
-    private Status status;
-    private Question question;
+
     private Map<Player, HurryGameAnswer> submittedAnswers = new HashMap<>();
     private LocalDateTime roundStartTime;
     private final static Integer winnerLimit = 3;
 
     public HurryGameGameRound(Question question) {
-        this.status = Status.CREATED;
-        this.answer = question.getAnswer();
-        this.question = question;
+        super(question);
     }
 
-    @Override
-    public void join(Player player){
-        this.players.add(player);
-    }
 
-    @Override
     public Question start() throws GameException {
         this.roundStartTime = LocalDateTime.now();
-        if(this.status != Status.CREATED){
-            throw new IllegalGameStateException(status);
-        }
-        this.status = Status.ONGOING;
-        return this.question;
+        return super.start();
     }
 
 
     @Override
     public void handleAnswer(Player player, Answer answer) throws GameException {
-       if(status != Status.ONGOING){
-           throw new IllegalGameStateException(status);
-       }
+       super.handleAnswer(player,answer);
         submittedAnswers.put(player, new HurryGameAnswer(answer.getAnswer()));
     }
 
@@ -62,7 +47,7 @@ class HurryGameGameRound implements GameRound {
         if(submittedAnswers.isEmpty()){
             throw new NoAnswersException("There isn't any answer in the round to evaluate");
         }
-        Result result = new Result(this.answer.getAnswer());
+        Result result = new Result(this.question.getAnswer().getAnswer());
 
         List<Map.Entry<Player,HurryGameAnswer>> sortedEntries = submittedAnswers.entrySet()
                 .stream()

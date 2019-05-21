@@ -4,9 +4,7 @@ import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.IllegalGameStateException;
 import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.game.GameRound;
-import hu.kb.app.game.model.Answer;
-import hu.kb.app.game.model.Question;
-import hu.kb.app.game.model.Result;
+import hu.kb.app.game.model.*;
 import hu.kb.app.game.enums.Status;
 import hu.kb.app.player.Player;
 import lombok.Data;
@@ -15,42 +13,18 @@ import lombok.NoArgsConstructor;
 import java.util.*;
 
 public @Data @NoArgsConstructor
-class RareGameRound implements GameRound {
+class RareGameRound extends BaseGameRound implements GameRound {
 
-    private List<Player> players = new ArrayList<>();
-    private Status status;
-    private Question question;
     private Map<Player, Answer> submittedAnswers = new HashMap<>();
 
-
     public RareGameRound(Question question) {
-        this.status = Status.CREATED;
-        this.question = question;
-    }
-
-    @Override
-    public void join(Player player){
-        this.players.add(player);
-    }
-
-    @Override
-    public Question start() throws GameException {
-        if(this.status != Status.CREATED){
-            throw new IllegalGameStateException(status);
-        }
-        players.forEach(player -> {
-            question.addOption(player.getName());
-        });
-        this.status = Status.ONGOING;
-        return this.question;
+        super(question);
     }
 
 
     @Override
     public void handleAnswer(Player player, Answer answer) throws GameException {
-       if(status != Status.ONGOING){
-           throw new IllegalGameStateException(status);
-       }
+        super.handleAnswer(player,answer);
         submittedAnswers.put(player, answer);
     }
 
