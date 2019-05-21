@@ -1,4 +1,4 @@
-package hu.kb.app.game;
+package hu.kb.app.model.game;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;

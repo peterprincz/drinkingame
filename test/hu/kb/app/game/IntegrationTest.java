@@ -1,4 +1,4 @@
-package hu.kb.app.game;
+package hu.kb.app.model.game;
 
 
 
@@ -6,15 +6,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import hu.kb.app.api.*;
+import hu.kb.app.controller.api.*;
 import hu.kb.app.controller.GameController;
-import hu.kb.app.game.enums.GameType;
-import hu.kb.app.game.model.Answer;
-import hu.kb.app.game.raregame.RareGame;
-import hu.kb.app.player.Gender;
-import hu.kb.app.player.Player;
-import hu.kb.app.player.drinksetting.DrinkType;
-import hu.kb.app.player.drinksetting.SipType;
+import hu.kb.app.model.game.enums.GameType;
+import hu.kb.app.model.game.basegame.Answer;
+import hu.kb.app.model.raregame.RareGame;
+import hu.kb.app.model.player.Gender;
+import hu.kb.app.model.player.Player;
+import hu.kb.app.model.player.drinksetting.DrinkType;
+import hu.kb.app.model.player.drinksetting.SipType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -84,7 +83,7 @@ public class IntegrationTest {
                 .andReturn();
 
         SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addKeyDeserializer(Player.class, new hu.kb.app.game.ClassKeyDeserializer());
+        simpleModule.addKeyDeserializer(Player.class, new hu.kb.app.model.game.ClassKeyDeserializer());
         mapper.registerModule(simpleModule);
 
         RareGame responseRareGame = mapper.readValue(createGameResult.getResponse().getContentAsString(), RareGame.class);

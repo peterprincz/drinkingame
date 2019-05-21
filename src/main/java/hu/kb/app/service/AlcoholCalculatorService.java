@@ -1,7 +1,7 @@
 package hu.kb.app.service;
 
-import hu.kb.app.player.Gender;
-import hu.kb.app.player.drinksetting.DrinkType;
+import hu.kb.app.model.player.Gender;
+import hu.kb.app.model.player.drinksetting.DrinkType;
 import org.springframework.stereotype.Service;
 
 @Service

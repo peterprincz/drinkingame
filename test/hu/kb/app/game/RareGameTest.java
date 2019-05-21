@@ -1,15 +1,13 @@
-package hu.kb.app.game;
+package hu.kb.app.model.game;
 
 import hu.kb.app.exceptions.GameException;
-import hu.kb.app.game.enums.Status;
-import hu.kb.app.game.model.Answer;
-import hu.kb.app.game.model.Question;
-import hu.kb.app.game.model.Result;
-import hu.kb.app.game.raregame.RareGame;
-import hu.kb.app.game.raregame.RareGameFactory;
-import hu.kb.app.game.raregame.RareGameRound;
-import hu.kb.app.player.Player;
-import hu.kb.app.player.drinksetting.DrinkType;
+import hu.kb.app.model.game.basegame.*;
+import hu.kb.app.model.game.enums.Status;
+import hu.kb.app.model.raregame.RareGame;
+import hu.kb.app.model.raregame.RareGameFactory;
+import hu.kb.app.model.raregame.RareGameRound;
+import hu.kb.app.model.player.Player;
+import hu.kb.app.model.player.drinksetting.DrinkType;
 import org.junit.Test;
 
 import java.util.Collections;

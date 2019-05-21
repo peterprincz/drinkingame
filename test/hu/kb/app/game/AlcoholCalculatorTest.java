@@ -1,7 +1,7 @@
-package hu.kb.app.game;
+package hu.kb.app.model.game;
 
-import hu.kb.app.player.Gender;
-import hu.kb.app.player.drinksetting.DrinkType;
+import hu.kb.app.model.player.Gender;
+import hu.kb.app.model.player.drinksetting.DrinkType;
 import hu.kb.app.service.AlcoholCalculatorService;
 import org.junit.jupiter.api.Test;
 
