@@ -22,6 +22,13 @@ class RareGameRound extends BaseGameRound implements GameRound {
     }
 
 
+    public Question start() throws GameException{
+        players.forEach(player -> {
+            question.addOption(player.getName());
+        });
+        return super.start();
+    }
+
     @Override
     public void handleAnswer(Player player, Answer answer) throws GameException {
         super.handleAnswer(player,answer);

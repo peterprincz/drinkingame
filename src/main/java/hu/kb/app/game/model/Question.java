@@ -13,7 +13,7 @@ class Question {
 
     private String question;
 
-    private List<String> options;
+    private List<String> options = new LinkedList<>();
 
     private Answer answer;
 

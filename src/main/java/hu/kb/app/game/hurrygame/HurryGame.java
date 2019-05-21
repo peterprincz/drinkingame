@@ -3,6 +3,7 @@ package hu.kb.app.game.hurrygame;
 import hu.kb.app.exceptions.GameException;
 import hu.kb.app.exceptions.NoAnswersException;
 import hu.kb.app.game.Game;
+import hu.kb.app.game.GameRound;
 import hu.kb.app.game.enums.Status;
 import hu.kb.app.game.model.Answer;
 import hu.kb.app.game.model.BaseGame;
@@ -18,35 +19,9 @@ import java.util.List;
 public @Data @NoArgsConstructor
 class HurryGame extends BaseGame implements Game {
 
-    private List<HurryGameGameRound> gameRoundList = new ArrayList<>();
-
-    protected HurryGameGameRound activeGameRound;
-
-
 
     public void addQuestion(Question question){
         gameRoundList.add(new HurryGameGameRound(question));
-    }
-
-    public Result evaluateRound() throws GameException {
-        Result result = null;
-        try {
-            result = activeGameRound.evaluateResults();
-        } catch (NoAnswersException e){
-            setStatus(Status.ENDED);
-            throw e;
-        } finally {
-            this.gameRoundList.remove(0);
-            if(gameRoundList.size() > 0){
-                this.activeGameRound = this.gameRoundList.get(0);
-            } else {
-                setStatus(Status.ENDED);
-                assert result != null;
-                result.setLastQuestion(true);
-            }
-        }
-
-        return result;
     }
 
     public void startGameRound() throws GameException {

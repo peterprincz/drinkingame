@@ -31,9 +31,6 @@ public abstract class BaseGameRound {
         if(this.status != Status.CREATED){
             throw new IllegalGameStateException(status);
         }
-        players.forEach(player -> {
-            question.addOption(player.getName());
-        });
         this.status = Status.ONGOING;
         return this.question;
     }

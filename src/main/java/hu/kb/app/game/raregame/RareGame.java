@@ -18,10 +18,6 @@ import java.util.List;
 public @Data @NoArgsConstructor
 class RareGame extends BaseGame implements Game {
 
-    private List<RareGameRound> gameRoundList = new ArrayList<>();
-
-    private RareGameRound activeGameRound;
-
     public void addQuestion(Question question){
         gameRoundList.add(new RareGameRound(question));
     }
@@ -37,24 +33,6 @@ class RareGame extends BaseGame implements Game {
 
     public void sendAnswerToGameRound(Player player, Answer answer) throws GameException{
         activeGameRound.handleAnswer(player, answer);
-    }
-
-    public Result evaluateRound() {
-        Result result;
-        try {
-            result = activeGameRound.evaluateResults();
-        //TODO WHAT SHOULD BE THE LOGIC HERE?
-        } catch (NoAnswersException e){
-            result = new Result("NO ANSWER WAS GIVEN");
-        }
-        this.gameRoundList.remove(0);
-        if(gameRoundList.size() > 0){
-            this.activeGameRound = this.gameRoundList.get(0);
-        } else {
-            setStatus(Status.ENDED);
-            result.setLastQuestion(true);
-        }
-        return result;
     }
 
 }
