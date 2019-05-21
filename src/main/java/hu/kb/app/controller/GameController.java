@@ -57,14 +57,13 @@ public class GameController {
     @PostMapping("/create-player")
     public Player createPlayer(@RequestBody CreatePlayerRequest createPlayerRequest){
         logger.info("Request to create a player with the the following parameters" +createPlayerRequest.toString());
-        Player player =  gameService.createPlayer(
+        return gameService.createPlayer(
                 createPlayerRequest.getName(),
                 createPlayerRequest.getWeight(),
                 createPlayerRequest.getDrinkType(),
                 createPlayerRequest.getSipType(),
                 createPlayerRequest.getGender()
         );
-        return player;
     }
 
     @PostMapping("/edit-player")

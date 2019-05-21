@@ -14,4 +14,15 @@ public @Data @NoArgsConstructor class Result {
     private List<Player> losers = new ArrayList<>();
     private boolean lastQuestion = false;
 
+    public Result(String result){
+        this.result = result;
+    }
+
+    public void addWinner(Player player){
+        winners.add(player);
+    }
+
+    public void addLoser(Player player){
+        losers.add(player);
+    }
 }

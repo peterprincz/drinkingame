@@ -34,13 +34,12 @@ class RareGameRound implements GameRound {
     }
 
     @Override
-    public Question start(List<Player> players) throws GameException {
-        players.forEach(this::join);
+    public Question start() throws GameException {
         if(this.status != Status.CREATED){
             throw new IllegalGameStateException(status);
         }
         players.forEach(player -> {
-            question.getOptions().add(player.getName());
+            question.addOption(player.getName());
         });
         this.status = Status.ONGOING;
         return this.question;
@@ -66,24 +65,32 @@ class RareGameRound implements GameRound {
         //Making a map of guesses
         for (Map.Entry<Player, Answer> entry: submittedAnswers.entrySet()){
             String answer = entry.getValue().getAnswer();
-            answerCounts.merge(answer, 1, (a, b) -> a + b);
+            answerCounts.merge(answer, 1, Integer::sum);
         }
+
         Integer maximumguess = Collections.max(answerCounts.values());
+
         List<String> listOfPlayerWithMaximumGuesses = new ArrayList<>();
+
         //Making a list of players with the maximum guess
         for (Map.Entry<String, Integer> entry : answerCounts.entrySet()){
             if(entry.getValue().equals(maximumguess)){
                 listOfPlayerWithMaximumGuesses.add(entry.getKey());
             }
         }
+
         result.setResult(listOfPlayerWithMaximumGuesses.toString());
-        for (Map.Entry<Player, Answer> entry: submittedAnswers.entrySet()){
-            if(listOfPlayerWithMaximumGuesses.contains(entry.getValue().getAnswer())){
-                result.getWinners().add(entry.getKey());
+
+        for (Map.Entry<Player, Answer> entry : submittedAnswers.entrySet()){
+            String correctAnswer = entry.getValue().getAnswer();
+
+            if(listOfPlayerWithMaximumGuesses.contains(correctAnswer)){
+                result.addWinner(entry.getKey());
             } else {
-                result.getLosers().add(entry.getKey());
+                result.addLoser(entry.getKey());
             }
         }
+
         this.status = Status.ENDED;
         return result;
     }

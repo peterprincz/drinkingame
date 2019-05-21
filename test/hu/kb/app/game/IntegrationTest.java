@@ -1,6 +1,7 @@
 package hu.kb.app.game;
 
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -83,7 +84,7 @@ public class IntegrationTest {
                 .andReturn();
 
         SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addKeyDeserializer(Player.class, new ClassKeyDeserializer());
+        simpleModule.addKeyDeserializer(Player.class, new hu.kb.app.game.ClassKeyDeserializer());
         mapper.registerModule(simpleModule);
 
         RareGame responseRareGame = mapper.readValue(createGameResult.getResponse().getContentAsString(), RareGame.class);

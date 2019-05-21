@@ -39,8 +39,7 @@ class HurryGameGameRound implements GameRound {
     }
 
     @Override
-    public Question start(List<Player> players) throws GameException {
-        players.forEach(this::join);
+    public Question start() throws GameException {
         this.roundStartTime = LocalDateTime.now();
         if(this.status != Status.CREATED){
             throw new IllegalGameStateException(status);
@@ -63,9 +62,9 @@ class HurryGameGameRound implements GameRound {
         if(submittedAnswers.isEmpty()){
             throw new NoAnswersException("There isn't any answer in the round to evaluate");
         }
-        Result result = new Result();
-        result.setResult(this.answer.getAnswer());
-        List<Map.Entry<Player,HurryGameAnswer>> sortedEntries =submittedAnswers.entrySet()
+        Result result = new Result(this.answer.getAnswer());
+
+        List<Map.Entry<Player,HurryGameAnswer>> sortedEntries = submittedAnswers.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue((Comparator.comparing(HurryGameAnswer::getSubmitTime))))
                 .collect(Collectors.toList());
@@ -73,11 +72,14 @@ class HurryGameGameRound implements GameRound {
         int counter = 0;
 
         for (Map.Entry<Player, HurryGameAnswer> sortedEntry : sortedEntries) {
-            if (sortedEntry.getValue().getAnswer().equals(result.getResult()) && counter < winnerLimit) {
+            String correctAnswer = result.getResult();
+            String givenAnswer = sortedEntry.getValue().getAnswer();
+
+            if (givenAnswer.equals(correctAnswer) && counter < winnerLimit) {
                 counter++;
-                result.getWinners().add(sortedEntry.getKey());
+                result.addWinner(sortedEntry.getKey());
             } else {
-                result.getLosers().add(sortedEntry.getKey());
+                result.addLoser(sortedEntry.getKey());
             }
         }
         return result;

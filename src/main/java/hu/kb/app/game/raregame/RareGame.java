@@ -32,7 +32,7 @@ class RareGame extends BaseGame implements Game {
             activeGameRound = gameRoundList.get(0);
         }
         players.forEach(activeGameRound::join);
-        activeGameRound.start(this.players);
+        activeGameRound.start();
     }
 
     public void sendAnswerToGameRound(Player player, Answer answer) throws GameException{
@@ -45,8 +45,7 @@ class RareGame extends BaseGame implements Game {
             result = activeGameRound.evaluateResults();
         //TODO WHAT SHOULD BE THE LOGIC HERE?
         } catch (NoAnswersException e){
-            result = new Result();
-            result.setResult("NO ANSWER WAS GIVEN");
+            result = new Result("NO ANSWER WAS GIVEN");
         }
         this.gameRoundList.remove(0);
         if(gameRoundList.size() > 0){

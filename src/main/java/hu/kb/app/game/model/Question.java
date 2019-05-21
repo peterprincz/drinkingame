@@ -28,4 +28,8 @@ class Question {
         this.options = new LinkedList<>();
         this.answer = new Answer();
     }
+
+    public void addOption(String option){
+        options.add(option);
+    }
 }

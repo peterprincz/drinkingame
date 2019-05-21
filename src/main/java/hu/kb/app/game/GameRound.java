@@ -12,7 +12,7 @@ import java.util.List;
 public interface GameRound {
 
     void join(Player player);
-    Question start(List<Player> players) throws GameException;
+    Question start() throws GameException;
     void handleAnswer(Player player, Answer answer) throws GameException;
     Result evaluateResults() throws GameException;
 

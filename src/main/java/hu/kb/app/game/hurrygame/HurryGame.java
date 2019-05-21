@@ -32,7 +32,6 @@ class HurryGame extends BaseGame implements Game {
         Result result = null;
         try {
             result = activeGameRound.evaluateResults();
-        //TODO WHAT SHOULD BE THE LOGIC HERE?
         } catch (NoAnswersException e){
             setStatus(Status.ENDED);
             throw e;
@@ -56,7 +55,7 @@ class HurryGame extends BaseGame implements Game {
             activeGameRound = gameRoundList.get(0);
         }
         players.forEach(activeGameRound::join);
-        activeGameRound.start(this.players);
+        activeGameRound.start();
     }
 
     public void sendAnswerToGameRound(Player player, Answer answer) throws GameException{

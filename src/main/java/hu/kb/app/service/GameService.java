@@ -40,7 +40,6 @@ public class GameService {
 
     private List<Game> gameList = new ArrayList<>();
 
-
     public Game createGame(String gameName, List<Question> questions, GameType gameType){
         if(GameType.RAREGAME.equals(gameType)){
             RareGame rareGame;
@@ -121,8 +120,7 @@ public class GameService {
         try {
             result = game.evaluateRound();
         } catch (NoAnswersException e){
-            result = new Result();
-            result.setResult("NO ANSWER WAS GIVEN");
+            result = new Result("NO ANSWER WAS GIVEN");
             return result;
         }
         logger.info("evaluating the round in game: " + game.getId());
