@@ -9,8 +9,6 @@ import java.util.*;
 
 public class HurryGameFactory {
 
-    private static Integer IntegerCounter = 0;
-
     public static HurryGame createHurryGame(List<Question> questionList, String gameName){
         HurryGame hurryGame = new HurryGame();
         hurryGame.setName(gameName);
@@ -23,7 +21,7 @@ public class HurryGameFactory {
     public static HurryGame createRareGameWithDefaultQuestions(String gameName){
         HurryGame hurryGame = new HurryGame();
         hurryGame.setName(gameName);
-        hurryGame.setId(generateAndSetId());
+        hurryGame.setId(GameIdGenerator.generateGameId());
         List<Question> questionList = new LinkedList<>();
             questionList.add(new Question("What was our biggest difficulity?",
                     Arrays.asList("Lack of motivation","Lack of knowledge","Coming up with a good idea","Not enough food"),
@@ -48,11 +46,6 @@ public class HurryGameFactory {
         hurryGame.setActiveGameRound(hurryGame.getGameRoundList().get(0));
         hurryGame.setStatus(Status.CREATED);
         return hurryGame;
-    }
-
-    private static Integer generateAndSetId(){
-        IntegerCounter += 1;
-        return IntegerCounter;
     }
 
 }

@@ -10,12 +10,18 @@ import hu.kb.app.model.game.basegame.Result;
 import hu.kb.app.model.game.enums.Status;
 import hu.kb.app.model.player.Player;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.*;
 
+@EqualsAndHashCode(callSuper = true)
 public @Data @NoArgsConstructor
 class RareGameRound extends BaseGameRound implements GameRound {
+
+    public RareGameRound(Question question) {
+        super(question);
+    }
 
     private Map<Player, Answer> submittedAnswers = new HashMap<>();
 

@@ -9,14 +9,20 @@ import hu.kb.app.model.game.basegame.Question;
 import hu.kb.app.model.game.basegame.Result;
 import hu.kb.app.model.player.Player;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@EqualsAndHashCode(callSuper = true)
 public @Data @NoArgsConstructor
 class HurryGameGameRound extends BaseGameRound implements GameRound {
+
+    public HurryGameGameRound(Question question) {
+        super(question);
+    }
 
     private Map<Player, HurryGameAnswer> submittedAnswers = new HashMap<>();
     private LocalDateTime roundStartTime;
