@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 public @Data @NoArgsConstructor
-class StartGameRequest {
+class GameRequest {
 
     private Integer gameId;
 

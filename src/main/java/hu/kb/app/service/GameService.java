@@ -73,18 +73,30 @@ public class GameService {
         throw new RuntimeException("INVALID GAMETYPE" + gameType);
     }
 
-    public Player createPlayer(String name, Double weight, DrinkType drinkType, SipType sipType, Gender gender ){
-        Player player = new Player(name, weight, drinkType, sipType, gender);
-        logger.info("Saving player to database: " + player.getName());
-        return playerRepository.save(player);
-    }
-
-    public Player getPlayerBy(Integer id) throws PlayerNotFoundException{
-        return playerRepository.findById(id).orElseThrow(()->new PlayerNotFoundException("Player not found"));
-    }
-
-    public List<Player> getPlayers(){
-        return playerRepository.findAll();
+    public Result evaluateGameRound(Integer gameId) throws GameException {
+        Game game = getGameById(gameId);
+        Result result;
+        try {
+            result = game.evaluateRound();
+        } catch (NoAnswersException e){
+            result = new Result("NO ANSWER WAS GIVEN");
+            return result;
+        }
+        logger.info("evaluating the round in game: " + game.getId());
+        result.getWinners().forEach(player -> {
+            player.drink();
+            player.setAlcoholPercentage(alcoholCalculatorService.calculateBAC(
+                    player.getAlcoholConsumed(),
+                    player.getDrinkType(),
+                    player.getWeight(),
+                    player.getGender()));
+            playerRepository.save(player);
+        });
+        if(result.isLastQuestion()){
+            logger.info("no more round left in game: " + game.getId() + " , removing from the list");
+            gameList.remove(game);
+        }
+        return result;
     }
 
     public Game joinGame(Integer playerId,Integer gameId) throws GameException{
@@ -93,6 +105,14 @@ public class GameService {
         game.addPlayer(playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId)));
         logger.info("Player:{" + playerId +"} successfully joined game: " + gameId);
         return game;
+    }
+
+    public List<Game> getGames(){
+        return gameList;
+    }
+
+    public Game getGameById(Integer id) throws GameNotFoundException {
+        return gameList.stream().filter(x -> x.getId().equals(id)).findFirst().orElseThrow(() -> new GameNotFoundException(id));
     }
 
     public Game startGameRound(Integer gameId) throws GameException {
@@ -110,34 +130,18 @@ public class GameService {
         return game;
     }
 
-    public Result evaluateGameRound(Integer gameId) throws GameException {
-        Game game = getGameById(gameId);
-        Result result;
-        try {
-            result = game.evaluateRound();
-        } catch (NoAnswersException e){
-            result = new Result("NO ANSWER WAS GIVEN");
-            return result;
-        }
-        logger.info("evaluating the round in game: " + game.getId());
-        result.getWinners().forEach(player -> {
-                        player.drink();
-                        player.setAlcoholPercentage(alcoholCalculatorService.calculateBAC(
-                                player.getAlcoholConsumed(),
-                                player.getDrinkType(),
-                                player.getWeight(),
-                                player.getGender()));
-                        playerRepository.save(player);
-        });
-        if(result.isLastQuestion()){
-            logger.info("no more round left in game: " + game.getId() + " , removing from the list");
-            gameList.remove(game);
-        }
-        return result;
+    public Player createPlayer(String name, Double weight, DrinkType drinkType, SipType sipType, Gender gender ){
+        Player player = new Player(name, weight, drinkType, sipType, gender);
+        logger.info("Saving player to database: " + player.getName());
+        return playerRepository.save(player);
     }
 
-    public Game getGameById(Integer id) throws GameNotFoundException {
-        return gameList.stream().filter(x -> x.getId().equals(id)).findFirst().orElseThrow(() -> new GameNotFoundException(id));
+    public Player getPlayerBy(Integer id) throws PlayerNotFoundException{
+        return playerRepository.findById(id).orElseThrow(()->new PlayerNotFoundException("Player not found"));
+    }
+
+    public List<Player> getPlayers(){
+        return playerRepository.findAll();
     }
 
     public Player editPlayer(Integer playerId, DrinkType drinkType, SipType sipType) throws GameException{
@@ -145,10 +149,6 @@ public class GameService {
         playerToModify.setDrinkType(drinkType);
         playerToModify.setSipType(sipType);
         return playerRepository.save(playerToModify);
-    }
-
-    public List<Game> getGames(){
-        return gameList;
     }
 
 }

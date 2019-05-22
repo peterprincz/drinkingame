@@ -81,7 +81,7 @@ public class GameController {
     }
 
     @PostMapping("/start-game")
-    public Game startGame(@RequestBody StartGameRequest startGameRequest) throws GameException {
+    public Game startGame(@RequestBody GameRequest startGameRequest) throws GameException {
         Integer gameId = startGameRequest.getGameId();
         logger.info("request to start the game with the id of" + gameId);
         Game game = gameService.startGameRound(gameId);
@@ -96,8 +96,8 @@ public class GameController {
     }
 
     @PostMapping("/end-game")
-    public Result endGame(@RequestBody EndGameRequest endGameRequest) throws GameException {
-        Integer gameId = endGameRequest.getGameId();
+    public Result endGame(@RequestBody GameRequest gameRequest) throws GameException {
+        Integer gameId = gameRequest.getGameId();
         logger.info("request to end a game with the id of "+ gameId);
         Result result = gameService.evaluateGameRound(gameId);
         simpMessagingTemplate.convertAndSend("/game/end/" + gameId, result);
