@@ -30,8 +30,7 @@ import java.util.*;
 public class GameService {
 
     @Autowired
-    private
-    PlayerRepository playerRepository;
+    private PlayerRepository playerRepository;
 
     @Autowired
     private AlcoholCalculatorService alcoholCalculatorService;
@@ -85,14 +84,11 @@ public class GameService {
     }
 
     public List<Player> getPlayers(){
-        Iterable<Player> playerIterator = playerRepository.findAll();
-        List<Player> players = new ArrayList<>();
-        playerIterator.forEach(players::add);
-        return players;
+        return playerRepository.findAll();
     }
 
     public Game joinGame(Integer playerId,Integer gameId) throws GameException{
-        Game game = gameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
+        Game game = getGameById(gameId);
         logger.info("Player:{" + playerId +"} joining game: " + gameId);
         game.addPlayer(playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId)));
         logger.info("Player:{" + playerId +"} successfully joined game: " + gameId);
@@ -100,22 +96,22 @@ public class GameService {
     }
 
     public Game startGameRound(Integer gameId) throws GameException {
-        Game game = gameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() ->  new GameNotFoundException(gameId));
+        Game game = getGameById(gameId);
         logger.info("starting a round in game: " + game.getId());
         game.startGameRound();
         return game;
     }
 
     public Game sendAnswerToGame(Integer playerId, Answer answer, Integer gameId) throws GameException {
-        Player player = playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
-        Game game = gameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() ->  new GameNotFoundException(gameId));
+        Player player = getPlayerBy(playerId);
+        Game game = getGameById(gameId);
         logger.info("Player:{" + playerId +"} sending answer to game: " + gameId);
         game.sendAnswerToGameRound(player, answer);
         return game;
     }
 
     public Result evaluateGameRound(Integer gameId) throws GameException {
-        Game game = gameList.stream().filter(x -> x.getId().equals(gameId)).findFirst().orElseThrow(() -> new GameNotFoundException(gameId));
+        Game game = getGameById(gameId);
         Result result;
         try {
             result = game.evaluateRound();
@@ -144,8 +140,8 @@ public class GameService {
         return gameList.stream().filter(x -> x.getId().equals(id)).findFirst().orElseThrow(() -> new GameNotFoundException(id));
     }
 
-    public Player editPlayer(Integer playedId, DrinkType drinkType, SipType sipType) throws GameException{
-        Player playerToModify = playerRepository.findById(playedId).orElseThrow(() -> new PlayerNotFoundException(playedId));
+    public Player editPlayer(Integer playerId, DrinkType drinkType, SipType sipType) throws GameException{
+        Player playerToModify = getPlayerBy(playerId);
         playerToModify.setDrinkType(drinkType);
         playerToModify.setSipType(sipType);
         return playerRepository.save(playerToModify);

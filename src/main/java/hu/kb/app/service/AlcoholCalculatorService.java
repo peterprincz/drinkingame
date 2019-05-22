@@ -12,8 +12,8 @@ public class AlcoholCalculatorService {
     private static final Double WILDMARK_MALE_FACTOR = 0.68;
 
     public Double calculateBAC(Double totalAlcohol, DrinkType drinkType, Double weight, Gender gender, Integer hourPassed){
-        Double alcholInOz = totalAlcohol / 28.34;
-        Double weightInLbs = weight * 2.20;
+        double alcholInOz = totalAlcohol / 28.34;
+        double weightInLbs = weight * 2.20;
         Double genderFactor;
         if(Gender.MALE.equals(gender)){
             genderFactor = WILDMARK_MALE_FACTOR;
